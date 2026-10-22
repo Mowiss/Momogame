@@ -378,7 +378,7 @@ body.dragging-card,body.dragging-card .pile-card{cursor:grabbing}
 .rscroll{flex:1;overflow:auto;background:#2a2f38;padding:28px 20px 60px}
 .rpage{background:#fff;color:#1b1b1b;margin:0 auto;position:relative;outline:none;cursor:text}
 .rdoc{outline:none;min-height:100%;word-wrap:break-word}
-.rdoc h1{font-size:1.9em;margin:.7em 0 .35em;line-height:1.2}
+.rdoc h1{font-size:1.9em;margin:.7em 0 .35em;line-height:1.2;color:var(--h1,inherit)}
 .rdoc h2{font-size:1.45em;margin:.8em 0 .3em;line-height:1.25}
 .rdoc h3{font-size:1.18em;margin:.8em 0 .25em}
 .rdoc p{margin:0 0 .55em}
@@ -403,7 +403,7 @@ body.dragging-card,body.dragging-card .pile-card{cursor:grabbing}
 .rdoc .toc .te .pg{flex:none;min-width:1.2em;text-align:right}
 .rdoc .toc .te.l2{padding-left:1.2em}
 .rdoc .toc .te.l3{padding-left:2.4em;font-size:.95em}
-.rdoc.num{counter-reset:h1}
+.rpages,.rprint{counter-reset:h1}
 .rdoc.num h1{counter-reset:h2}
 .rdoc.num h2{counter-reset:h3}
 .rdoc.num h1::before{counter-increment:h1;content:counter(h1) ". "}
@@ -879,6 +879,85 @@ a.dbtn:hover{color:#fff}
 .ap-it{aspect-ratio:1;border:2px solid var(--g700);border-radius:8px;overflow:hidden;padding:0;cursor:pointer;background:var(--g900)}
 .ap-it:hover{border-color:var(--c-album);transform:scale(1.03)}
 .ap-it img{width:100%;height:100%;object-fit:cover;display:block}
+/* =========================================================================
+   RÈGLES — feuilles, blocs, couvertures, sommaire en dossiers
+   ========================================================================= */
+.rpages{display:flex;flex-direction:column;align-items:center;gap:26px}
+.rwrap{display:flex;flex-direction:column;align-items:center;gap:6px}
+.rlabel{align-self:flex-start;font-size:11.5px;color:var(--g400);font-weight:700;letter-spacing:.02em}
+.rwrap.cur .rlabel{color:var(--brand3)}
+.rsheet{position:relative;overflow:hidden;flex:none;box-shadow:0 6px 24px #0008;color:#1b1b1b}
+.rwrap.cur .rsheet{outline:2px solid var(--brand2);outline-offset:3px}
+.rsheet.over{outline:2px solid #ef4444 !important}
+.rover{position:absolute;left:0;right:0;bottom:0;background:#ef4444;color:#fff;font:700 11.5px system-ui;padding:4px 8px;display:flex;align-items:center;gap:6px;z-index:5}
+.rcontent{position:absolute;overflow:visible;z-index:1}
+.rprint .rcontent{overflow:hidden}
+.rwm{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:0}
+.rwm img{max-height:90%;object-fit:contain}
+.rhead,.rfoot{position:absolute;color:#6b7280;white-space:nowrap;overflow:hidden;z-index:1}
+.rhead{border-bottom:1px solid #d1d5db;padding-bottom:2px}
+.rfoot{display:flex;justify-content:space-between}
+.rblk{position:relative;margin:0 0 .45em}
+.rblk:last-of-type{margin-bottom:0}
+.rpages .rblk{border-radius:3px;transition:box-shadow .12s}
+.rpages .rblk:hover{box-shadow:0 0 0 1px #3fbf5a55}
+.rpages .rblk.sel{box-shadow:0 0 0 2px #3fbf5a}
+.rpages .rblk.dragging{opacity:.35}
+.rblk.dz-b{box-shadow:0 -3px 0 #3fbf5a}.rblk.dz-a{box-shadow:0 3px 0 #3fbf5a}
+.rbh{position:absolute;left:-22px;top:2px;width:16px;height:20px;display:flex;align-items:center;justify-content:center;border-radius:3px;color:#9ca3af;cursor:grab;opacity:0}
+.rblk:hover .rbh,.rblk.sel .rbh{opacity:1}.rbh:hover{background:#e5e7eb;color:#111}
+.radd{position:absolute;left:50%;bottom:-11px;transform:translateX(-50%);width:20px;height:20px;border-radius:50%;border:0;background:#16a34a;color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;opacity:0;z-index:3;box-shadow:0 1px 4px #0005}
+.rblk:hover .radd{opacity:1}
+.raddend{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:8px;padding:6px;border:1.5px dashed #c7ccd4;border-radius:6px;background:transparent;color:#6b7280;font:600 12px system-ui;cursor:pointer;opacity:.55}
+.raddend:hover{opacity:1;border-color:#16a34a;color:#16a34a}
+.rflow{outline:none;min-height:1.2em}
+.rb-box{padding:.6em .9em;border-radius:5px}
+.rb-cols{display:grid;grid-template-columns:1fr 1fr;gap:8mm}
+.rb-img{margin:0;display:flex;flex-direction:column;width:var(--w,70%)}
+.rb-img.al-center{margin:0 auto}.rb-img.al-left{margin:0 auto 0 0}.rb-img.al-right{margin:0 0 0 auto}
+.rb-img img{width:100%;height:auto;display:block}
+.rb-img figcaption{font-size:.85em;font-style:italic;color:#4b5563;text-align:center;margin-top:3px}
+.rb-noimg{height:110px;border:2px dashed #c7ccd4;border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:#9ca3af;font:12px system-ui;cursor:pointer}
+.rb-sep{border:0;border-top:1.5px solid #9ca3af;margin:.4em 0}
+.rb-space{display:flex;align-items:center;justify-content:center}
+.rpages .rb-space{border:1px dashed #d1d5db;border-radius:3px}
+.rb-space span{font:10px system-ui;color:#9ca3af}
+.rpages [data-ph]:empty::before{content:attr(data-ph);color:#9ca3af;opacity:.8}
+.rsheet .toc{border:1px solid #c7ccd4;background:#f7f8fa;padding:.6em 1em;border-radius:4px;user-select:none}
+.rsheet .toc .tt{font-weight:700;margin-bottom:.3em;font-size:1.1em}
+.rsheet .toc .te{display:flex;gap:6px;padding:1px 0;cursor:pointer}
+.rsheet .toc .te.l1{font-weight:700;margin-top:.25em}.rsheet .toc .te.l2{padding-left:1.2em}
+.rsheet .toc .te .dots{flex:1;border-bottom:1px dotted #9aa1ad;margin-bottom:.35em}
+.rcov-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rcov{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;padding:12%;text-align:center;text-shadow:0 2px 12px #0008;z-index:1}
+.rcov-t{font:800 34pt 'Cinzel',Georgia,serif;line-height:1.15;min-width:60%}
+.rcov-s{font:400 15pt Georgia,serif;min-width:60%}
+.rcov.back{justify-content:flex-end}.rcov.back .rcov-t{font-size:20pt}
+/* sommaire en dossiers */
+.rtoc .ph{display:flex;align-items:center;justify-content:space-between}
+.rt-btns{display:flex;gap:4px}.rt-btns .mini{display:inline-flex;align-items:center;gap:1px;padding:2px 6px}
+.rt-tree{display:flex;flex-direction:column;padding:2px 6px}
+.rt-page,.rt-ch{display:flex;align-items:center;gap:6px;padding:4px 6px;border-radius:5px;cursor:pointer;color:var(--g300);font-size:12.5px;border:1px solid transparent;position:relative}
+.rt-page:hover,.rt-ch:hover{background:var(--g750);color:#fff}
+.rt-page.cur{background:#0b3d12;border-color:var(--brand2);color:#fff}
+.rt-page .ic-svg{color:var(--g500);flex:none}
+.rt-page.in{margin-left:18px}
+.rt-page.cov{color:var(--c-rules)}.rt-page.cov .ic-svg{color:var(--c-rules)}
+.rt-n{min-width:16px;text-align:right;font-size:10.5px;color:var(--g500);font-weight:700}
+.rt-t{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.rt-ch{font-weight:700;color:var(--g200)}.rt-ch .ic-svg{color:var(--c-rules);flex:none}
+.rt-c{font-size:10.5px;color:var(--g500);font-weight:600}
+.rt-tog{display:flex;transition:transform .15s}.rt-chap.open .rt-tog{transform:rotate(90deg)}
+.rt-kids{display:none;flex-direction:column}.rt-chap.open .rt-kids{display:flex}
+.rt-empty{margin-left:24px;padding:4px 6px;font-size:11.5px;color:var(--g500);border:1px dashed var(--g600);border-radius:5px}
+.rt-x{background:none;border:0;color:var(--g500);padding:0 2px;display:flex;opacity:0;cursor:pointer}.rt-page:hover .rt-x,.rt-ch:hover .rt-x{opacity:1}.rt-x:hover{color:var(--danger)}
+.rt-page.dragging,.rt-ch.dragging{opacity:.4}
+.dz-b{box-shadow:0 -2px 0 var(--brand3)}.dz-a{box-shadow:0 2px 0 var(--brand3)}.dz-in{background:#0b3d12 !important;border-color:var(--brand3) !important}
+.rt-drop-end{margin-top:6px;padding:5px;border:1px dashed var(--g700);border-radius:5px;color:var(--g500);font-size:11px;text-align:center}
+#rSideCtx .tblp{display:none}#rSideCtx.hastable .tblp{display:block}
+#rSide .tilegrid.t3,#rSide .tilegrid.t2{grid-template-columns:repeat(var(--tc,3),minmax(0,1fr))}#rSide .tilegrid.t2{--tc:2}
+#rSide .tile.sm{min-width:0;padding:6px 2px;font-size:11px;line-height:1.1;flex-direction:column;gap:3px;text-align:center}
+#rSide .tile.sm span{white-space:nowrap}
 
 </style>
 </head>
@@ -1125,6 +1204,7 @@ setTimeout(done,6200);
         <input class="wsname" id="avName" spellcheck="false">
         <span class="hint" id="avStats"></span>
         <div class="spacer"></div>
+        <button class="btn sm" id="avZip" title="Télécharger toutes les images (PHOTO_JEU_DATE)"><i data-ico="download" data-size="15"></i>Télécharger (.zip)</button>
         <button class="btn sm primary filebtn"><i data-ico="plus" data-size="15"></i>Ajouter des images<input type="file" id="avFile" accept="image/*" multiple data-noalbum></button>
       </div>
       <div class="av-wrap"><div class="av-grid" id="avGrid"></div></div>
@@ -1139,14 +1219,14 @@ setTimeout(done,6200);
         <input class="wsname" id="rvName" spellcheck="false">
         <span class="hint" id="rvStats"></span>
         <div class="spacer"></div>
-        <button class="btn sm" id="rvPdf"><i data-ico="pdf" data-size="15"></i>PDF de ce livret</button>
+        <button class="btn sm" id="rvPdf"><i data-ico="pdf" data-size="15"></i>PDF du livret</button>
         <button class="btn sm" id="rvPrint"><i data-ico="print" data-size="15"></i>Gestionnaire d'impression</button>
       </div>
       <div class="rbody">
         <nav class="rtoc" id="rToc"></nav>
         <div class="rmain">
           <div class="rtb" id="rTb"></div>
-          <div class="rscroll" id="rScroll"><div class="rpage" id="rPage"><div class="rdoc" id="rDoc" contenteditable="true" spellcheck="true"></div></div></div>
+          <div class="rscroll" id="rScroll"><div class="rpages" id="rPages"></div></div>
         </div>
         <aside class="rside" id="rSide"></aside>
       </div>
@@ -1358,7 +1438,7 @@ const ICO = {
   image: '<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.8"/><path d="m21 15-5-5L5 21"/>',
   smile: '<circle cx="12" cy="12" r="9.5"/><path d="M8 14.5s1.5 2 4 2 4-2 4-2"/><path d="M9 9.5h.01M15 9.5h.01" stroke-width="2.8"/>',
   patate: '<path d="M11.5 3.2c4.6-.6 9 2.2 9.3 6.6.3 4.6-2.6 8.9-7.4 10.4-4.9 1.5-9.6-.8-10.4-5-.8-4.4 1.6-7 3-8.6 1.5-1.7 3.1-3.1 5.5-3.4z" stroke-dasharray="0"/><circle cx="9" cy="10" r="1.6" fill="currentColor" stroke="none"/><circle cx="14.5" cy="9" r="1.6" fill="currentColor" stroke="none"/><circle cx="12.5" cy="14.5" r="1.6" fill="currentColor" stroke="none"/>',
-  mapfold: '<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2-6-2z"/><path d="M9 4v14M15 6v14"/>',
+  mapfold: '<path d="M4 21V9h3V6h2v3h2V6h2v3h2V6h2v3h3v12"/><path d="M4 9h16"/><path d="M10 21v-4a2 2 0 0 1 4 0v4"/><path d="M7.5 13h1M15.5 13h1"/><path d="M2.5 21h19"/>',
   album: '<rect x="6.5" y="3" width="14.5" height="14.5" rx="2"/><path d="M3 7v12a2 2 0 0 0 2 2h12"/><circle cx="11.2" cy="7.8" r="1.5"/><path d="m21 13.5-4-4-8 8"/>',
   logo: '<path d="M3 20V4l5 7 5-7v16"/><path d="M15.5 4h5.5v3.5h-5.5zM15.5 10.2h5.5v3.6h-5.5zM15.5 16.5h5.5V20h-5.5z" stroke-width="1.6"/>',
   crop: '<path d="M6 2v14a2 2 0 0 0 2 2h14"/><path d="M18 22V8a2 2 0 0 0-2-2H2"/>',
@@ -1570,6 +1650,9 @@ document.addEventListener('click', e => {
 /* ---------------- fichiers .mmg ---------------- */
 const MMG = { mime: 'application/x-momogame', ext: 'mmg', label: 'Projet MomoTOP' };
 function serialize() { doc.saved = new Date().toISOString(); doc.app = 'MomoTOP'; return JSON.stringify(doc); }
+// nom de fichier exporté : NOM_JEU_DATE.ext (comme pour chaque bulle)
+function exportName(name, ext) { const d = new Date(), p = n => String(n).padStart(2, '0'); return `${slug(name)}_${slug(doc ? doc.name : 'jeu')}_${d.getFullYear()}-${p(d.getMonth() + 1)}-${p(d.getDate())}` + (ext ? '.' + ext : ''); }
+function uniqueName(name, used) { if (!used.has(name)) { used.add(name); return name; } const m = name.match(/^(.*?)(\.[^.]+)?$/); let k = 2; while (used.has(`${m[1]}_${k}${m[2] || ''}`)) k++; const n = `${m[1]}_${k}${m[2] || ''}`; used.add(n); return n; }
 function download(blob, name) { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = name; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 5000); }
 const kb = n => n > 1048576 ? (n / 1048576).toFixed(1) + ' Mo' : Math.max(1, Math.round(n / 1024)) + ' Ko';
 async function writeTo(h, text) { const w = await h.createWritable(); await w.write(new Blob([text], { type: MMG.mime })); await w.close(); }
@@ -1811,147 +1894,341 @@ function ideaEnter(n) {
 }
 
 /* =========================================================================
-   BULLE RÈGLES — traitement de texte (sommaire, mise en page, hyperliens)
+   BULLE RÈGLES — un livret fait de FEUILLES rangées dans des CHAPITRES (dossiers),
+   chaque feuille composée de BLOCS (texte, image, encadré, 2 colonnes, séparateur,
+   espace, sommaire). Couvertures, fond de page, filigrane, en-tête / pied.
+   data = { book: [chapitre | feuille], covers: { front, back }, layout, html (texte dérivé) }
    ========================================================================= */
 const PAGE_SIZES = { A5: [148, 210], A4: [210, 297], A3: [297, 420], Letter: [215.9, 279.4] };
 const MM2PX = 96 / 25.4;
-const RFONTS = [["Georgia, 'Times New Roman', serif", 'Georgia'], ["'EB Garamond', Garamond, serif", 'EB Garamond'], ["'Cinzel', serif", 'Cinzel'], ["'Inter', system-ui, sans-serif", 'Inter'], ["Verdana, sans-serif", 'Verdana'], ["'Trebuchet MS', sans-serif", 'Trebuchet'], ["'Palatino Linotype', serif", 'Palatino'], ["'Courier New', monospace", 'Courier'], ["'Grenze Gotisch', cursive", 'Grenze Gotisch'], ["'Press Start 2P', monospace", 'Press Start 2P']];
+const RFONTS = [["Georgia, 'Times New Roman', serif", 'Georgia'], ["'EB Garamond', Garamond, serif", 'EB Garamond'], ["'Cinzel', serif", 'Cinzel'], ["'Inter', system-ui, sans-serif", 'Inter'], ["Verdana, sans-serif", 'Verdana'], ["'Trebuchet MS', sans-serif", 'Trebuchet'], ["'Palatino Linotype', serif", 'Palatino'], ["'Courier New', monospace", 'Courier'], ["'Grenze Gotisch', cursive", 'Grenze Gotisch'], ["'Press Start 2P', monospace", 'Press Start 2P'], ["'Special Elite', monospace", 'Special Elite']];
+const BLOCKS = {
+  text:  { label: 'Texte',      ic: 'mText',  hint: 'paragraphes, titres, listes, tableaux' },
+  image: { label: 'Image',      ic: 'image',  hint: 'une image, avec légende' },
+  box:   { label: 'Encadré',    ic: 'mShape', hint: 'un texte mis en valeur' },
+  cols:  { label: '2 colonnes', ic: 'alignJ', hint: 'texte sur deux colonnes' },
+  sep:   { label: 'Séparateur', ic: 'minus',  hint: 'une ligne' },
+  space: { label: 'Espace',     ic: 'dots',   hint: 'un vide réglable' },
+  toc:   { label: 'Sommaire',   ic: 'rules',  hint: 'chapitres et feuilles, avec les numéros de page' }
+};
+const BOX_COLORS = ['#f6f1e3', '#e8f1fb', '#eaf7ec', '#fdecec', '#f3eafb', '#fff7d6', '#eef0f3'];
+
+/* ---------- modèle ---------- */
+const newBlock = (type, o) => Object.assign({ id: uid(), type }, type === 'text' || type === 'box' ? { html: '<p><br></p>' } : {}, type === 'cols' ? { left: '<p><br></p>', right: '<p><br></p>' } : {}, type === 'image' ? { src: null, w: 70, align: 'center', caption: '' } : {}, type === 'space' ? { h: 10 } : {}, type === 'box' ? { color: BOX_COLORS[0] } : {}, o || {});
+const newPage = (title, html) => ({ id: uid(), title: title || 'Nouvelle feuille', blocks: [newBlock('text', html ? { html } : {})] });
+const newChapter = (title, pages) => ({ kind: 'chapter', id: uid(), title: title || 'Nouveau chapitre', open: true, pages: pages || [] });
+const DEFAULT_RULES = () => [newChapter('Règles du jeu', [
+  newPage('Présentation', '<h1>Règles du jeu</h1><p>Présente ton jeu ici : nombre de joueurs, durée, but du jeu…</p><h2>Matériel</h2><ul><li>…</li></ul>'),
+  newPage('Déroulement', '<h2>Mise en place</h2><p>…</p><h2>Tour de jeu</h2><p>…</p><h2>Fin de partie</h2><p>…</p>')])];
+// ancien livret (un seul texte) → chapitres (titres 1) et feuilles (titres 2)
+function bookFromHtml(html) {
+  const src = document.createElement('div'); src.innerHTML = html || '';
+  const book = []; let chap = null, page = null;
+  const push = nd => {
+    if (!page) { page = { id: uid(), title: chap ? chap.title : 'Introduction', blocks: [newBlock('text', { html: '' })] }; (chap ? chap.pages : book).push(page); }
+    let tb = page.blocks[page.blocks.length - 1]; if (tb.type !== 'text') { tb = newBlock('text', { html: '' }); page.blocks.push(tb); }
+    tb.html += nd.nodeType === 1 ? nd.outerHTML : esc(nd.textContent);
+  };
+  [...src.childNodes].forEach(nd => {
+    if (nd.nodeType === 3 && !nd.textContent.trim()) return;
+    if (nd.nodeType === 1 && nd.tagName === 'H1') { chap = newChapter(nd.textContent.trim() || 'Chapitre'); book.push(chap); page = null; }
+    if (nd.nodeType === 1 && nd.tagName === 'H2' && page && page.blocks.map(b => b.html || 'x').join('').replace(/<h1[^>]*>[\s\S]*?<\/h1>/i, '').trim()) page = null;
+    if (nd.nodeType === 1 && nd.tagName === 'H2' && !page) { page = { id: uid(), title: nd.textContent.trim() || 'Feuille', blocks: [newBlock('text', { html: '' })] }; (chap ? chap.pages : book).push(page); }
+    if (nd.nodeType === 1 && nd.classList.contains('toc')) { if (!page) push(document.createTextNode('')); page.blocks.push(newBlock('toc')); return; }
+    if (nd.nodeType === 1 && nd.tagName === 'HR' && nd.classList.contains('pbreak')) { page = null; return; }
+    push(nd);
+  });
+  book.forEach(it => (it.kind === 'chapter' ? it.pages : [it]).forEach(p => p.blocks = p.blocks.filter(b => b.type !== 'text' || b.html.trim()).concat([]) ));
+  book.forEach(it => (it.kind === 'chapter' ? it.pages : [it]).forEach(p => { if (!p.blocks.length) p.blocks.push(newBlock('text')); }));
+  return book.length ? book : [newPage('Feuille 1')];
+}
 function ensureRules(d) {
-  d.html = d.html || '<h1>Règles du jeu</h1><p>Présente ton jeu ici : nombre de joueurs, durée, but du jeu…</p><h2>Matériel</h2><ul><li>…</li></ul><h2>Mise en place</h2><p>…</p><h2>Tour de jeu</h2><p>…</p><h2>Fin de partie</h2><p>…</p>';
-  d.layout = Object.assign({ format: 'A4', orient: 'portrait', margin: 18, cols: 1, font: RFONTS[0][0], size: 11, lh: 1.45, num: false, header: '', footer: '', pageNum: true, color: '#1b1b1b', h1color: '#1b1b1b' }, d.layout || {});
+  d.layout = Object.assign({ format: 'A4', orient: 'portrait', margin: 18, font: RFONTS[0][0], size: 11, lh: 1.45, num: false, header: '', footer: '', pageNum: true, color: '#1b1b1b', h1color: '#1b1b1b', bg: '#ffffff', wm: null, wmOpacity: 0.12, wmSize: 70 }, d.layout || {});
   d.print = Object.assign({ pageFormat: null }, d.print || {});
+  const cov = (o, def) => Object.assign({ on: def, title: '', subtitle: '', bg: null, color: '#1f2937', ink: '#ffffff' }, o || {});
+  d.covers = d.covers || {}; d.covers.front = cov(d.covers.front, true); d.covers.back = cov(d.covers.back, false);
+  if (!Array.isArray(d.book)) d.book = d.html ? bookFromHtml(d.html) : DEFAULT_RULES();
+  d.book = d.book.filter(Boolean).map(it => it.kind === 'chapter' ? Object.assign(it, { pages: (it.pages || []).map(fixPage) }) : fixPage(it));
+  d.html = rulesHtmlOf(d);
   return d;
 }
-const blobToData = new Map();
-function rulesToEditor(html) {
-  return String(html || '').replace(/(<img\b[^>]*?\bsrc=")(data:[^"]+)"/gi, (m, a, d) => { const u = imgURL(d); blobToData.set(u, d); return a + u + '"'; });
-}
-function rulesFromEditor(html) { return html.replace(/blob:[^"'\s)]+/g, u => blobToData.get(u) || u); }
+function fixPage(p) { p.id = p.id || uid(); p.title = p.title || 'Feuille'; p.blocks = (p.blocks || []).map(b => Object.assign({ id: uid() }, b)); if (!p.blocks.length) p.blocks.push(newBlock('text')); return p; }
+// toutes les feuilles dans l'ordre, avec leur chapitre
+function allPages(d) { const out = []; d.book.forEach(it => { if (it.kind === 'chapter') it.pages.forEach(p => out.push({ page: p, chapter: it })); else out.push({ page: it, chapter: null }); }); return out; }
+function findPage(d, id) { for (const it of d.book) { if (it.kind === 'chapter') { const i = it.pages.findIndex(p => p.id === id); if (i >= 0) return { list: it.pages, i, page: it.pages[i], chapter: it }; } else if (it.id === id) return { list: d.book, i: d.book.indexOf(it), page: it, chapter: null }; } return null; }
+function findBlock(d, bid) { for (const { page } of allPages(d)) { const i = page.blocks.findIndex(b => b.id === bid); if (i >= 0) return { page, i, block: page.blocks[i] }; } return null; }
+function rulesHtmlOf(d) { return allPages(d).map(({ page }) => page.blocks.map(b => b.type === 'text' || b.type === 'box' ? b.html : b.type === 'cols' ? b.left + b.right : b.type === 'image' && b.src ? `<img src="${b.src}">` : '').join('')).join(''); }
 function rulesWordCount(html) { const t = String(html || '').replace(/<[^>]+>/g, ' ').replace(/&nbsp;/g, ' ').trim(); return t ? t.split(/\s+/).length : 0; }
+// numéros de page : la 1re de couverture n'est pas numérotée
+function pageNumbers(d) { const m = {}; allPages(d).forEach(({ page }, i) => m[page.id] = i + 1); return m; }
 
-let rNode = null, rSyncT = 0, rSelImg = null, rSavedRange = null;
-const rDoc = $('#rDoc'), rPage = $('#rPage');
-function rulesEnter(n) {
-  rNode = n; const d = n.data;
-  $('#rvName').value = n.name;
-  rDoc.innerHTML = rulesToEditor(d.html); rSelImg = null;
-  rLastToc = ''; rGuideSig = ''; ensureHeadingIds(); applyRulesLayout(); buildRulesToolbar(); renderRulesToc(); updateTocBlocks(); renderRulesSide();
-  $('#rvName').oninput = e => { n.name = e.target.value; touch(); };
+/* images : data: dans le .mmg, blob: dans l'éditeur (plus léger) */
+const blobToData = new Map();
+function rulesToEditor(html) { return String(html || '').replace(/(<img\b[^>]*?\bsrc=")(data:[^"]+)"/gi, (m, a, dd) => { const u = imgURL(dd); blobToData.set(u, dd); return a + u + '"'; }); }
+function rulesFromEditor(html) { return html.replace(/blob:[^"'\s)]+/g, u => blobToData.get(u) || u); }
+
+/* ---------- rendu d'une feuille (éditeur ET PDF) ---------- */
+function pageMM(L) { let [w, h] = PAGE_SIZES[L.format] || PAGE_SIZES.A4; if (L.orient === 'landscape') [w, h] = [h, w]; return { w, h }; }
+function tocBlockHtml(d) {
+  const nums = pageNumbers(d), L = d.layout;
+  let k = 0;
+  return `<div class="tt">Sommaire</div>` + d.book.map(it => it.kind === 'chapter'
+    ? `<div class="te l1" data-target="${it.pages[0] ? it.pages[0].id : ''}"><span class="lbl">${L.num ? (++k) + '. ' : ''}${esc(it.title)}</span><span class="dots"></span><span class="pg">${it.pages[0] ? nums[it.pages[0].id] : ''}</span></div>` + it.pages.map(p => `<div class="te l2" data-target="${p.id}"><span class="lbl">${esc(p.title)}</span><span class="dots"></span><span class="pg">${nums[p.id]}</span></div>`).join('')
+    : `<div class="te l1" data-target="${it.id}"><span class="lbl">${esc(it.title)}</span><span class="dots"></span><span class="pg">${nums[it.id]}</span></div>`).join('');
 }
+function blockHtml(b, d, edit) {
+  const ce = edit ? ' contenteditable="true" spellcheck="true"' : '';
+  if (b.type === 'text') return `<div class="rb-text rflow" data-f="html"${ce}>${rulesToEditor(b.html)}</div>`;
+  if (b.type === 'box') return `<div class="rb-box rflow" data-f="html" style="background:${b.color}"${ce}>${rulesToEditor(b.html)}</div>`;
+  if (b.type === 'cols') return `<div class="rb-cols"><div class="rflow" data-f="left"${ce}>${rulesToEditor(b.left)}</div><div class="rflow" data-f="right"${ce}>${rulesToEditor(b.right)}</div></div>`;
+  if (b.type === 'image') return `<figure class="rb-img al-${b.align}" style="--w:${b.w}%">${b.src ? `<img src="${imgURL(b.src)}" alt="">` : `<div class="rb-noimg">${edit ? `${ico('image', 30)}<span>Clique pour choisir une image</span>` : ''}</div>`}${b.caption || edit ? `<figcaption class="rflow" data-f="caption"${ce} data-ph="Légende (facultative)">${esc(b.caption || '')}</figcaption>` : ''}</figure>`;
+  if (b.type === 'sep') return '<hr class="rb-sep">';
+  if (b.type === 'space') return `<div class="rb-space" style="height:${b.h}mm">${edit ? `<span>espace ${b.h} mm</span>` : ''}</div>`;
+  if (b.type === 'toc') return `<div class="toc">${tocBlockHtml(d)}</div>`;
+  return '';
+}
+function sheetFrame(d, inner, o) {
+  const L = d.layout, pg = pageMM(L), m = L.margin * MM2PX, fs = Math.max(7, L.size - 2);
+  const wm = L.wm && !o.cover ? `<div class="rwm" style="opacity:${L.wmOpacity}"><img src="${imgURL(L.wm)}" style="width:${L.wmSize}%"></div>` : '';
+  const head = !o.cover && L.header ? `<div class="rhead" style="left:${m}px;right:${m}px;top:${m / 2 - fs * 0.7}px;font:${fs}pt ${L.font}">${esc(L.header)}</div>` : '';
+  const foot = !o.cover && (L.footer || L.pageNum) ? `<div class="rfoot" style="left:${m}px;right:${m}px;bottom:${m / 2 - fs * 0.7}px;font:${fs}pt ${L.font}"><span>${esc(L.footer)}</span><span>${L.pageNum ? o.num + ' / ' + o.total : ''}</span></div>` : '';
+  return `<div class="rsheet${o.cover ? ' cover' : ''}" data-pid="${o.pid}" style="width:${pg.w * MM2PX}px;height:${pg.h * MM2PX}px;background:${o.bg || L.bg}">${wm}${inner}${head}${foot}</div>`;
+}
+function pageSheetHtml(d, page, num, total, edit) {
+  const L = d.layout, m = L.margin * MM2PX;
+  const blocks = page.blocks.map(b => edit
+    ? `<div class="rblk" data-bid="${b.id}" data-type="${b.type}"><div class="rbh" draggable="true" title="Glisser pour déplacer le bloc (aussi vers une autre feuille)">${ico('dots', 13)}</div>${blockHtml(b, d, true)}<button class="radd" data-after="${b.id}" title="Ajouter un bloc ici">${ico('plus', 13)}</button></div>`
+    : `<div class="rblk">${blockHtml(b, d, false)}</div>`).join('');
+  const inner = `<div class="rcontent rdoc${L.num ? ' num' : ''}" style="inset:${m}px;font-family:${L.font};font-size:${L.size}pt;line-height:${L.lh};color:${L.color};--h1:${L.h1color}">${blocks}${edit ? `<button class="raddend" data-endof="${page.id}">${ico('plus', 14)}Ajouter un bloc</button>` : ''}</div>`;
+  return sheetFrame(d, inner, { pid: page.id, num, total });
+}
+function coverSheetHtml(d, which, edit) {
+  const c = d.covers[which], ce = edit ? ' contenteditable="true" spellcheck="true"' : '';
+  const ph = which === 'front' ? ['Titre du jeu', 'Sous-titre, accroche…'] : ['Texte de 4e de couverture', 'Crédits, âge, durée…'];
+  const title = which === 'front' && !c.title && !edit ? esc(doc.name) : esc(c.title);
+  const inner = `${c.bg ? `<img class="rcov-bg" src="${imgURL(c.bg)}" alt="">` : ''}<div class="rcov ${which}" style="color:${c.ink}">
+      <div class="rcov-t rflow" data-cov="${which}" data-f="title"${ce} data-ph="${ph[0]}">${title}</div>
+      <div class="rcov-s rflow" data-cov="${which}" data-f="subtitle"${ce} data-ph="${ph[1]}">${esc(c.subtitle)}</div></div>`;
+  return sheetFrame(d, inner, { pid: 'cover-' + which, cover: true, bg: c.color });
+}
+// toutes les feuilles du livret, dans l'ordre d'impression
+function bookSheetsHtml(d, edit) {
+  const pages = allPages(d), total = pages.length, out = [];
+  if (d.covers.front.on) out.push({ id: 'cover-front', label: '1re de couverture', html: coverSheetHtml(d, 'front', edit) });
+  pages.forEach(({ page, chapter }, i) => out.push({ id: page.id, label: `${i + 1} · ${chapter ? chapter.title + ' › ' : ''}${page.title}`, html: pageSheetHtml(d, page, i + 1, total, edit) }));
+  if (d.covers.back.on) out.push({ id: 'cover-back', label: '4e de couverture', html: coverSheetHtml(d, 'back', edit) });
+  return out;
+}
+
+/* ---------- éditeur ---------- */
+let rNode = null, rSyncT = 0, rSavedRange = null, rCurPage = null, rSelBlock = null;
+const rDoc = $('#rPages');
+function rulesEnter(n) {
+  rNode = n; ensureRules(n.data); const d = n.data;
+  $('#rvName').value = n.name; $('#rvName').oninput = e => { setNodeName(n, e.target.value || ' '); touch(); updateTitle(); };
+  if (!rCurPage || (!findPage(d, rCurPage) && !String(rCurPage).startsWith('cover-'))) rCurPage = (allPages(d)[0] || {}).page ? allPages(d)[0].page.id : null;
+  buildRulesToolbar(); renderRulesAll();
+}
+function renderRulesAll() { renderPages(); renderRulesToc(); renderRulesSide(); updateRulesStats(); }
+function renderPages() {
+  const d = rNode.data, keep = $('#rScroll').scrollTop;
+  rDoc.innerHTML = bookSheetsHtml(d, true).map(s => `<div class="rwrap${s.id === rCurPage ? ' cur' : ''}" data-wrap="${s.id}"><div class="rlabel">${esc(s.label)}</div>${s.html}</div>`).join('');
+  $('#rScroll').scrollTop = keep;
+  if (rSelBlock) { const el = rDoc.querySelector(`.rblk[data-bid="${rSelBlock}"]`); if (el) el.classList.add('sel'); else rSelBlock = null; }
+  requestAnimationFrame(checkOverflow);
+}
+// une feuille qui déborde est signalée (le surplus serait coupé à l'impression)
+function checkOverflow() {
+  rDoc.querySelectorAll('.rsheet:not(.cover)').forEach(sh => {
+    const c = sh.querySelector('.rcontent'); if (!c) return; const over = c.scrollHeight - c.clientHeight;
+    sh.classList.toggle('over', over > 2); let b = sh.querySelector('.rover');
+    if (over > 2) { if (!b) { b = document.createElement('div'); b.className = 'rover'; sh.appendChild(b); } b.innerHTML = `${ico('warn', 14)} Déborde de ${Math.round(over / MM2PX)} mm : déplace un bloc sur une autre feuille`; } else if (b) b.remove();
+  });
+}
+function updateRulesStats() { if (!rNode) return; const d = rNode.data, w = rulesWordCount(d.html), n = allPages(d).length + (d.covers.front.on ? 1 : 0) + (d.covers.back.on ? 1 : 0); $('#rvStats').textContent = `${plural(w, 'mot', 'mots')} · ${plural(n, 'feuille', 'feuilles')}`; }
 function rulesSync() {
   if (!rNode || cur.view !== 'rules') return;
-  clearTimeout(rSyncT); rSyncT = 0;
-  const html = cleanRulesHtml();
-  if (html !== rNode.data.html) { rNode.data.html = html; touch(); }
+  clearTimeout(rSyncT); rSyncT = 0; const d = rNode.data;
+  rDoc.querySelectorAll('.rblk[data-bid]').forEach(el => { const f = findBlock(d, el.dataset.bid); if (!f) return; el.querySelectorAll('.rflow[data-f]').forEach(x => { const k = x.dataset.f; f.block[k] = k === 'caption' ? x.textContent.trim() : rulesFromEditor(x.innerHTML); }); });
+  rDoc.querySelectorAll('.rflow[data-cov]').forEach(x => d.covers[x.dataset.cov][x.dataset.f] = x.textContent.trim());
+  const html = rulesHtmlOf(d); if (html !== d.html) d.html = html;
+  touch();
 }
-function cleanRulesHtml() {
-  const c = rDoc.cloneNode(true); c.querySelectorAll('img.sel').forEach(i => i.classList.remove('sel')); c.querySelectorAll('.rpageguide').forEach(x => x.remove());
-  return rulesFromEditor(c.innerHTML);
-}
-let rLastToc = '';
 function scheduleRulesSync() {
-  touch(true);                                         // pastille ● tout de suite, le reste après la frappe
-  clearTimeout(rSyncT); rSyncT = setTimeout(() => {
-    rSyncT = 0; ensureHeadingIds();
-    const sig = headingsOf(rDoc).map(h => h.tagName + h.id + h.textContent).join('|');
-    if (sig !== rLastToc) { rLastToc = sig; renderRulesToc(); }
-    updateTocBlocks(); rulesSync(); updateRulesStats(); drawPageGuides();
-  }, 600);
+  touch(true);
+  clearTimeout(rSyncT); rSyncT = setTimeout(() => { rSyncT = 0; rulesSync(); updateRulesStats(); checkOverflow(); }, 500);
 }
-function ensureHeadingIds() { rDoc.querySelectorAll('h1,h2,h3').forEach(h => { if (!h.id || rDoc.querySelectorAll('#' + CSS.escape(h.id)).length > 1) h.id = 'h-' + uid(); }); }
-function headingsOf(root) { return [...root.querySelectorAll('h1,h2,h3')].filter(h => !h.closest('.toc') && h.textContent.trim()); }
-function headingNumbers(hs) { const c = [0, 0, 0]; return hs.map(h => { const l = +h.tagName[1] - 1; c[l]++; for (let i = l + 1; i < 3; i++) c[i] = 0; return c.slice(0, l + 1).join('.') + (l === 0 ? '.' : ''); }); }
+function rulesChanged(full) { rulesSync(); if (full !== false) renderRulesAll(); }
 
-/* ---------- mise en page ---------- */
-function pageMM(L) { let [w, h] = PAGE_SIZES[L.format] || PAGE_SIZES.A4; if (L.orient === 'landscape') [w, h] = [h, w]; return { w, h }; }
-function applyRulesLayout(target, docEl) {
-  const L = rNode.data.layout, pg = pageMM(L); const P = target || rPage, D = docEl || rDoc;
-  P.style.width = (pg.w * MM2PX) + 'px'; P.style.minHeight = (pg.h * MM2PX) + 'px';
-  P.style.padding = (L.margin * MM2PX) + 'px';
-  D.style.fontFamily = L.font; D.style.fontSize = L.size + 'pt'; D.style.lineHeight = L.lh; D.style.color = L.color;
-  D.classList.toggle('num', !!L.num); D.classList.toggle('cols2', +L.cols === 2);
-  D.querySelectorAll('h1').forEach(h => h.style.color = L.h1color !== '#1b1b1b' ? L.h1color : '');
-  if (!target) drawPageGuides();
-}
-let rGuideSig = '';
-function drawPageGuides() {
-  const L = rNode.data.layout, pg = pageMM(L), ph = pg.h * MM2PX; const total = rPage.offsetHeight;
-  const sig = ph + ':' + Math.floor((total - 4) / ph); if (sig === rGuideSig && rPage.querySelector('.rpageguide, .rdoc')) return; rGuideSig = sig;
-  rPage.querySelectorAll('.rpageguide').forEach(x => x.remove());
-  for (let i = 1; i * ph < total - 4; i++) { const g = document.createElement('div'); g.className = 'rpageguide'; g.style.top = (i * ph) + 'px'; g.innerHTML = `<span>page ${i + 1}</span>`; g.contentEditable = 'false'; rPage.appendChild(g); }
-}
-function updateRulesStats() { if (!rNode) return; const t = rDoc.textContent.trim(); const w = t ? t.split(/\s+/).length : 0; const pages = Math.max(1, Math.ceil(rPage.offsetHeight / (pageMM(rNode.data.layout).h * MM2PX) - 0.02)); $('#rvStats').textContent = `${plural(w, 'mot', 'mots')} · ≈ ${plural(pages, 'page', 'pages')}`; }
-
-/* ---------- sommaire (panneau gauche) + blocs sommaire dans le texte ---------- */
+/* ---------- sommaire en dossiers : chapitres et feuilles, à glisser ---------- */
 function renderRulesToc() {
-  const hs = headingsOf(rDoc), nums = rNode.data.layout.num ? headingNumbers(hs) : [];
-  $('#rToc').innerHTML = '<div class="ph">Sommaire</div>' + (hs.length ? hs.map((h, i) => `<a class="l${h.tagName[1]}" data-h="${h.id}" title="${esc(h.textContent)}">${nums[i] ? nums[i] + ' ' : ''}${esc(h.textContent)}</a>`).join('') : '<div class="empty">Ajoute des titres (Titre 1, 2, 3) : ils apparaissent ici et dans le sommaire du document.</div>');
-  $('#rToc').querySelectorAll('[data-h]').forEach(a => a.onclick = () => { const h = document.getElementById(a.dataset.h); if (h) { h.scrollIntoView({ behavior: 'smooth', block: 'start' }); placeCaret(h); } });
+  const d = rNode.data, nums = pageNumbers(d);
+  const pageRow = (p, inChap) => `<div class="rt-page${p.id === rCurPage ? ' cur' : ''}${inChap ? ' in' : ''}" data-page="${p.id}" draggable="true" title="Clic : aller à la feuille · double-clic : renommer · glisser : ranger"><span class="rt-n">${nums[p.id]}</span>${ico('mText', 13)}<span class="rt-t">${esc(p.title)}</span><button class="rt-x" data-pdel="${p.id}" title="Supprimer la feuille">${ico('trash', 12)}</button></div>`;
+  const cov = (w, label) => d.covers[w].on ? `<div class="rt-page cov${rCurPage === 'cover-' + w ? ' cur' : ''}" data-cover="${w}">${ico('image', 13)}<span class="rt-t">${label}</span></div>` : '';
+  $('#rToc').innerHTML = `<div class="ph">Sommaire<span class="rt-btns"><button class="mini" id="rt-addch" title="Nouveau chapitre (dossier)">${ico('folder', 13)}+</button><button class="mini" id="rt-addpg" title="Nouvelle feuille">${ico('mText', 13)}+</button></span></div>
+    <div class="rt-tree" id="rtTree">${cov('front', '1re de couverture')}${d.book.map(it => it.kind === 'chapter'
+      ? `<div class="rt-chap${it.open ? ' open' : ''}" data-chap="${it.id}"><div class="rt-ch" draggable="true" title="Clic : ouvrir / fermer · double-clic : renommer · glisser : ranger"><span class="rt-tog">${ico('next', 12)}</span>${ico('folder', 14)}<span class="rt-t">${esc(it.title)}</span><span class="rt-c">${it.pages.length}</span><button class="rt-x" data-cdel="${it.id}" title="Supprimer le chapitre (ses feuilles restent)">${ico('trash', 12)}</button></div>
+          <div class="rt-kids">${it.pages.map(p => pageRow(p, true)).join('') || '<div class="rt-empty">Glisse des feuilles ici</div>'}</div></div>`
+      : pageRow(it, false)).join('')}${cov('back', '4e de couverture')}<div class="rt-drop-end" data-rootend="1">Glisser ici : hors chapitre</div></div>
+    <div class="note" style="padding:8px 12px">Les chapitres sont des dossiers : glisse les feuilles dedans, dehors, ou pour les réordonner. Les chapitres se glissent aussi.</div>`;
+  wireRulesToc();
 }
-function tocHtml(hs, nums, pages) {
-  return `<div class="tt">Sommaire</div>` + hs.map((h, i) => `<div class="te l${h.tagName[1]}" data-target="${h.id}"><span class="lbl">${nums[i] ? nums[i] + ' ' : ''}${esc(h.textContent)}</span><span class="dots"></span><span class="pg">${pages ? pages[i] : ''}</span></div>`).join('');
+function rulesGo(id) {
+  rCurPage = id; if (rSelBlock) { const f = findBlock(rNode.data, rSelBlock); if (!f || f.page.id !== id) { rSelBlock = null; rDoc.querySelectorAll('.rblk.sel').forEach(x => x.classList.remove('sel')); } }
+  rDoc.querySelectorAll('.rwrap').forEach(w => w.classList.toggle('cur', w.dataset.wrap === id));
+  $$('#rToc [data-page],#rToc [data-cover]').forEach(r => r.classList.toggle('cur', (r.dataset.page || 'cover-' + r.dataset.cover) === id));
+  const w = rDoc.querySelector(`.rwrap[data-wrap="${id}"]`); if (w) w.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  renderRulesSide();
 }
-function updateTocBlocks() {
-  const blocks = rDoc.querySelectorAll('.toc'); if (!blocks.length) return;
-  const hs = headingsOf(rDoc), nums = rNode.data.layout.num ? headingNumbers(hs) : [];
-  const ph = pageMM(rNode.data.layout).h * MM2PX, top0 = rPage.getBoundingClientRect().top;
-  const pages = hs.map(h => 1 + Math.floor((h.getBoundingClientRect().top - top0) / ph));
-  blocks.forEach(b => { b.contentEditable = 'false'; b.innerHTML = tocHtml(hs, nums, pages); });
+let rtDrag = null;
+function wireRulesToc() {
+  const d = rNode.data, tree = $('#rtTree');
+  $('#rt-addch').onclick = () => { rulesSync(); const ch = newChapter('Chapitre ' + (d.book.filter(x => x.kind === 'chapter').length + 1), [newPage('Feuille 1')]); d.book.push(ch); rCurPage = ch.pages[0].id; rulesChanged(); rulesGo(rCurPage); };
+  $('#rt-addpg').onclick = () => rulesAddPageAfter(rCurPage);
+  tree.querySelectorAll('[data-page]').forEach(r => { r.onclick = e => { if (!e.target.closest('.rt-x')) rulesGo(r.dataset.page); }; r.ondblclick = () => renamePage(r.dataset.page); });
+  tree.querySelectorAll('[data-cover]').forEach(r => r.onclick = () => rulesGo('cover-' + r.dataset.cover));
+  tree.querySelectorAll('.rt-ch').forEach(h => { const id = h.parentNode.dataset.chap; h.onclick = e => { if (e.target.closest('.rt-x')) return; const c = d.book.find(x => x.id === id); c.open = !c.open; h.parentNode.classList.toggle('open', c.open); }; h.ondblclick = () => renameChapter(id); });
+  tree.querySelectorAll('[data-pdel]').forEach(b => b.onclick = e => { e.stopPropagation(); deletePage(b.dataset.pdel); });
+  tree.querySelectorAll('[data-cdel]').forEach(b => b.onclick = e => { e.stopPropagation(); deleteChapter(b.dataset.cdel); });
+  // glisser-déposer : feuilles et chapitres
+  tree.querySelectorAll('[draggable=true]').forEach(el => el.addEventListener('dragstart', e => {
+    rtDrag = el.dataset.page ? { page: el.dataset.page } : { chap: el.parentNode.dataset.chap };
+    e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', 'x'); el.classList.add('dragging');
+  }));
+  tree.addEventListener('dragend', () => { rtDrag = null; tree.querySelectorAll('.dragging,.dz-b,.dz-a,.dz-in').forEach(x => x.classList.remove('dragging', 'dz-b', 'dz-a', 'dz-in')); });
+  const target = e => {
+    const row = e.target.closest('[data-page],.rt-ch,.rt-drop-end,.rt-empty'); if (!row || !rtDrag) return null;
+    const r = row.getBoundingClientRect(), up = e.clientY < r.top + r.height / 2;
+    if (row.classList.contains('rt-drop-end')) return { row, kind: 'end' };
+    if (row.classList.contains('rt-empty')) return { row, kind: 'in', chap: row.closest('[data-chap]').dataset.chap };
+    if (row.classList.contains('rt-ch')) { const chap = row.parentNode.dataset.chap; if (rtDrag.page) return { row, kind: 'in', chap }; return { row, kind: up ? 'before' : 'after', chapRef: chap }; }
+    if (rtDrag.chap) { if (row.classList.contains('in')) return null; return { row, kind: up ? 'before' : 'after', pageRef: row.dataset.page }; }
+    return { row, kind: up ? 'before' : 'after', pageRef: row.dataset.page };
+  };
+  tree.addEventListener('dragover', e => { const t = target(e); tree.querySelectorAll('.dz-b,.dz-a,.dz-in').forEach(x => x.classList.remove('dz-b', 'dz-a', 'dz-in')); if (!t) return; e.preventDefault(); t.row.classList.add(t.kind === 'before' ? 'dz-b' : t.kind === 'after' ? 'dz-a' : 'dz-in'); });
+  tree.addEventListener('drop', e => { const t = target(e); if (!t) return; e.preventDefault(); rulesSync(); moveInBook(rtDrag, t); rtDrag = null; rulesChanged(); });
 }
-function placeCaret(el) { const r = document.createRange(); r.selectNodeContents(el); r.collapse(true); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
+function moveInBook(drag, t) {
+  const d = rNode.data;
+  if (drag.page) {
+    const f = findPage(d, drag.page); if (!f || t.pageRef === drag.page) return; f.list.splice(f.i, 1);
+    if (t.kind === 'end') d.book.push(f.page);
+    else if (t.kind === 'in') d.book.find(x => x.id === t.chap).pages.push(f.page);
+    else if (t.pageRef) { const g = findPage(d, t.pageRef); g.list.splice(g.i + (t.kind === 'after' ? 1 : 0), 0, f.page); }
+    else if (t.chapRef) { const i = d.book.findIndex(x => x.id === t.chapRef); d.book.splice(i + (t.kind === 'after' ? 1 : 0), 0, f.page); }
+  } else if (drag.chap) {
+    const i = d.book.findIndex(x => x.id === drag.chap); if (i < 0 || t.chapRef === drag.chap) return; const [c] = d.book.splice(i, 1);
+    if (t.kind === 'end') d.book.push(c);
+    else { const ref = t.chapRef || t.pageRef, j = d.book.findIndex(x => x.id === ref); d.book.splice(j < 0 ? d.book.length : j + (t.kind === 'after' ? 1 : 0), 0, c); }
+  }
+}
+function rulesAddPageAfter(pid) {
+  rulesSync(); const d = rNode.data, f = pid && findPage(d, pid), p = newPage('Feuille ' + (allPages(d).length + 1));
+  if (f) f.list.splice(f.i + 1, 0, p); else { const lastCh = [...d.book].reverse().find(x => x.kind === 'chapter'); (pid === 'cover-back' || !lastCh ? d.book : lastCh.pages).push(p); }
+  rCurPage = p.id; rulesChanged(); rulesGo(p.id); return p;
+}
+async function renamePage(id) { const f = findPage(rNode.data, id); if (!f) return; const v = await promptDlg('Titre de la feuille (affiché dans le sommaire)', f.page.title); if (v == null || !v.trim()) return; rulesSync(); f.page.title = v.trim(); rulesChanged(); }
+async function renameChapter(id) { const c = rNode.data.book.find(x => x.id === id); if (!c) return; const v = await promptDlg('Titre du chapitre', c.title); if (v == null || !v.trim()) return; rulesSync(); c.title = v.trim(); rulesChanged(); }
+async function deletePage(id) {
+  const d = rNode.data; if (allPages(d).length <= 1) return toast('Le livret garde au moins une feuille');
+  const f = findPage(d, id); if (!f) return; rulesSync();
+  if (rulesWordCount(f.page.blocks.map(b => b.html || b.left || '').join(' ')) > 3 && !await confirmDlg(`Supprimer la feuille « ${esc(f.page.title)} » et son contenu ?`, 'Supprimer')) return;
+  f.list.splice(f.i, 1); if (rCurPage === id) rCurPage = (allPages(d)[Math.max(0, f.i - 1)] || allPages(d)[0]).page.id; rulesChanged();
+}
+function deleteChapter(id) { rulesSync(); const d = rNode.data, i = d.book.findIndex(x => x.id === id); if (i < 0) return; const c = d.book[i]; d.book.splice(i, 1, ...c.pages); toast(`Chapitre « ${c.title} » supprimé : ses feuilles restent dans le livret`); rulesChanged(); }
 
-/* ---------- barre d'outils ---------- */
+/* ---------- blocs : ajout, déplacement, suppression ---------- */
+function addBlockMenu(anchor, afterId, pageId) {
+  const r = anchor.getBoundingClientRect();
+  showCtx(r.left, r.bottom + 4, [{ label: 'Ajouter un bloc' }, ...Object.keys(BLOCKS).map(t => ({ ic: BLOCKS[t].ic, text: `${BLOCKS[t].label} — ${BLOCKS[t].hint}`, fn: () => insertBlock(t, afterId, pageId) }))]);
+}
+function insertBlock(type, afterId, pageId) {
+  rulesSync(); const d = rNode.data, b = newBlock(type);
+  const f = afterId && findBlock(d, afterId);
+  if (f) f.page.blocks.splice(f.i + 1, 0, b); else { const p = findPage(d, pageId || rCurPage); if (!p) return; p.page.blocks.push(b); }
+  rSelBlock = b.id; rulesChanged();
+  const el = rDoc.querySelector(`.rblk[data-bid="${b.id}"] .rflow`); if (el && type !== 'image') { el.focus(); placeCaret(el); }
+  if (type === 'image') pickBlockImage(b.id);
+  return b;
+}
+function pickBlockImage(bid) { const inp = $('#rImg'); inp.dataset.bid = bid; inp.click(); }
+function blockOp(bid, op) {
+  rulesSync(); const d = rNode.data, f = findBlock(d, bid); if (!f) return;
+  const L = f.page.blocks;
+  if (op === 'up' && f.i > 0) [L[f.i - 1], L[f.i]] = [L[f.i], L[f.i - 1]];
+  if (op === 'down' && f.i < L.length - 1) [L[f.i + 1], L[f.i]] = [L[f.i], L[f.i + 1]];
+  if (op === 'dup') L.splice(f.i + 1, 0, Object.assign(deep(f.block), { id: uid() }));
+  if (op === 'del') { L.splice(f.i, 1); if (!L.length) L.push(newBlock('text')); rSelBlock = null; }
+  if (op === 'nextpage' || op === 'prevpage') {
+    const pages = allPages(d), pi = pages.findIndex(x => x.page === f.page), tgt = pages[pi + (op === 'nextpage' ? 1 : -1)];
+    let to = tgt && tgt.page; if (!to && op === 'nextpage') { to = newPage('Feuille ' + (pages.length + 1)); to.blocks = []; const pf = findPage(d, f.page.id); pf.list.splice(pf.i + 1, 0, to); }
+    if (!to) return; L.splice(f.i, 1); if (!L.length) L.push(newBlock('text')); if (op === 'nextpage') to.blocks.unshift(f.block); else to.blocks.push(f.block); rCurPage = to.id;
+  }
+  rulesChanged();
+}
+function selectBlock(bid) { rSelBlock = bid; rDoc.querySelectorAll('.rblk.sel').forEach(x => x.classList.toggle('sel', x.dataset.bid === bid)); const el = rDoc.querySelector(`.rblk[data-bid="${bid}"]`); if (el) el.classList.add('sel'); const w = el && el.closest('.rwrap'); if (w && w.dataset.wrap !== rCurPage) { rCurPage = w.dataset.wrap; rDoc.querySelectorAll('.rwrap').forEach(x => x.classList.toggle('cur', x === w)); $$('#rToc [data-page]').forEach(r => r.classList.toggle('cur', r.dataset.page === rCurPage)); } renderRulesSide(); }
+
+/* ---------- barre d'outils (texte riche, agit sur le bloc où se trouve le curseur) ---------- */
 const RB = (cmd, title, inner, extra = '') => `<button class="rb" data-cmd="${cmd}" title="${title}" ${extra}>${inner}</button>`;
 const SVG = p => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${p}</svg>`;
 function buildRulesToolbar() {
   if ($('#rTb').dataset.built) return; $('#rTb').dataset.built = '1';
   $('#rTb').innerHTML =
-    RB('undo', 'Annuler (Ctrl+Z)', SVG('<path d="M9 14 4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>')) + RB('redo', 'Rétablir (Ctrl+Y)', SVG('<path d="m15 14 5-5-5-5"/><path d="M20 9H9.5a5.5 5.5 0 0 0 0 11H13"/>')) + '<span class="rsep"></span>' +
-    `<select id="rBlock" title="Style de paragraphe"><option value="p">Paragraphe</option><option value="h1">Titre 1</option><option value="h2">Titre 2</option><option value="h3">Titre 3</option><option value="blockquote">Encadré / citation</option><option value="pre">Code / tableau brut</option></select>` +
+    `<select id="rBlock" title="Style de paragraphe"><option value="p">Paragraphe</option><option value="h1">Titre 1</option><option value="h2">Titre 2</option><option value="h3">Titre 3</option><option value="blockquote">Citation</option><option value="pre">Code / texte brut</option></select>` +
     `<select id="rFont" title="Police">${RFONTS.map(f => `<option value="${esc(f[0])}">${f[1]}</option>`).join('')}</select>` +
-    `<select id="rSize" title="Taille (pt)">${[8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48].map(s => `<option value="${s}">${s} pt</option>`).join('')}</select><span class="rsep"></span>` +
+    `<select id="rSize" title="Taille (pt)">${[8, 9, 10, 11, 12, 14, 16, 18, 20, 24, 28, 32, 40, 48, 60, 72].map(s => `<option value="${s}">${s} pt</option>`).join('')}</select><span class="rsep"></span>` +
     RB('bold', 'Gras (Ctrl+B)', '<b>B</b>') + RB('italic', 'Italique (Ctrl+I)', '<i>I</i>') + RB('underline', 'Souligné (Ctrl+U)', '<u>S</u>') + RB('strikeThrough', 'Barré', '<s>ab</s>') +
     `<label class="rcol" title="Couleur du texte">A<input type="color" id="rColor" value="#b91c1c"></label><label class="rcol" title="Surlignage">${ico('brush', 15)}<input type="color" id="rHilite" value="#fde68a"></label><span class="rsep"></span>` +
     RB('justifyLeft', 'Aligner à gauche', SVG('<path d="M3 6h18M3 12h12M3 18h16"/>')) + RB('justifyCenter', 'Centrer', SVG('<path d="M3 6h18M6 12h12M4 18h16"/>')) + RB('justifyRight', 'Aligner à droite', SVG('<path d="M3 6h18M9 12h12M5 18h16"/>')) + RB('justifyFull', 'Justifier', SVG('<path d="M3 6h18M3 12h18M3 18h18"/>')) + '<span class="rsep"></span>' +
     RB('insertUnorderedList', 'Liste à puces', SVG('<path d="M9 6h12M9 12h12M9 18h12"/><circle cx="4" cy="6" r="1.2" fill="currentColor"/><circle cx="4" cy="12" r="1.2" fill="currentColor"/><circle cx="4" cy="18" r="1.2" fill="currentColor"/>')) +
     RB('insertOrderedList', 'Liste numérotée', SVG('<path d="M10 6h11M10 12h11M10 18h11M4 6h1v4M4 10h2M6 18H4c0-1 2-2 2-3s-1-1.5-2-1"/>')) +
     RB('outdent', 'Diminuer le retrait', SVG('<path d="M21 6H11M21 12H11M21 18H11M7 8l-4 4 4 4"/>')) + RB('indent', 'Augmenter le retrait', SVG('<path d="M21 6H11M21 12H11M21 18H11M3 8l4 4-4 4"/>')) + '<span class="rsep"></span>' +
-    RB('link', 'Hyperlien : page web, titre du document ou bulle du projet (Ctrl+K)', SVG('<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>')) +
+    RB('link', 'Hyperlien : page web, titre, feuille ou bulle du projet (Ctrl+K)', SVG('<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/>')) +
     RB('unlink', 'Retirer le lien', SVG('<path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/><path d="M3 3l18 18"/>')) +
-    `<label class="rb filebtn" title="Insérer une image">${SVG('<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-5-5L5 21"/>')}<input type="file" id="rImg" accept="image/*"></label>` +
-    RB('table', 'Insérer un tableau', SVG('<rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h18M3 15h18M9 4v16M15 4v16"/>')) +
-    RB('insertHorizontalRule', 'Ligne de séparation', SVG('<path d="M3 12h18"/>')) +
-    RB('pagebreak', 'Saut de page', SVG('<path d="M4 3v6h16V3M4 21v-6h16v6M2 12h3M8 12h3M13 12h3M19 12h3"/>')) +
-    RB('toc', 'Insérer le sommaire automatique', SVG('<path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/>')) + '<span class="rsep"></span>' +
-    RB('removeFormat', 'Effacer la mise en forme', SVG('<path d="M4 7V4h16v3M9 20h6M12 4v16M3 3l18 18"/>'));
+    RB('table', 'Insérer un tableau dans le texte', SVG('<rect x="3" y="4" width="18" height="16" rx="1"/><path d="M3 10h18M3 15h18M9 4v16M15 4v16"/>')) + '<span class="rsep"></span>' +
+    RB('addblock', 'Ajouter un bloc après celui-ci (texte, image, encadré, 2 colonnes, séparateur, espace, sommaire)', `${ico('plus', 15)}Bloc`) +
+    RB('newpage', 'Nouvelle feuille après celle-ci (Ctrl+Entrée)', `${ico('mText', 15)}Feuille`) +
+    RB('removeFormat', 'Effacer la mise en forme', SVG('<path d="M4 7V4h16v3M9 20h6M12 4v16M3 3l18 18"/>')) +
+    `<input type="file" id="rImg" accept="image/*" hidden>`;
   const tb = $('#rTb');
-  tb.querySelectorAll('.rb[data-cmd]').forEach(b => { b.addEventListener('mousedown', e => e.preventDefault()); b.onclick = () => rulesCmd(b.dataset.cmd); });
+  tb.querySelectorAll('.rb[data-cmd]').forEach(b => { b.addEventListener('mousedown', e => e.preventDefault()); b.onclick = () => rulesCmd(b.dataset.cmd, b); });
   $('#rBlock').onchange = e => { rRestore(); document.execCommand('formatBlock', false, e.target.value); afterCmd(); };
   $('#rFont').onchange = e => { rRestore(); document.execCommand('fontName', false, e.target.value); afterCmd(); };
   $('#rSize').onchange = e => { rRestore(); rSetSize(+e.target.value); };
   $('#rColor').oninput = e => { rRestore(); document.execCommand('foreColor', false, e.target.value); afterCmd(); };
   $('#rHilite').oninput = e => { rRestore(); document.execCommand('hiliteColor', false, e.target.value); afterCmd(); };
-  $('#rImg').onchange = e => { const f = e.target.files[0]; e.target.value = ''; if (f) rulesInsertImageFile(f); };
+  // image : pour un bloc image (choisi), pour le filigrane, pour une couverture
+  $('#rImg').onchange = e => {
+    const f = e.target.files[0], tgt = e.target.dataset.bid, wm = e.target.dataset.wm, cov = e.target.dataset.cov; e.target.value = ''; delete e.target.dataset.bid; delete e.target.dataset.wm; delete e.target.dataset.cov;
+    if (!f) return;
+    albumPrepare(f).then(p => { if (!p) return; rulesSync(); const d = rNode.data;
+      if (wm) d.layout.wm = p.src; else if (cov) d.covers[cov].bg = p.src;
+      else { const fb = tgt && findBlock(d, tgt); if (fb) fb.block.src = p.src; else insertImageBlock(p.src); }
+      rulesChanged(); });
+  };
 }
-function rSave() { const s = getSelection(); if (s.rangeCount && rDoc.contains(s.anchorNode)) rSavedRange = s.getRangeAt(0).cloneRange(); }
-function rRestore() { rDoc.focus(); if (rSavedRange) { const s = getSelection(); s.removeAllRanges(); s.addRange(rSavedRange); } }
+function insertImageBlock(src) { const d = rNode.data, b = newBlock('image', { src }), f = rSelBlock && findBlock(d, rSelBlock); if (f) f.page.blocks.splice(f.i + 1, 0, b); else { const p = findPage(d, rCurPage) || findPage(d, allPages(d)[0].page.id); p.page.blocks.push(b); } rSelBlock = b.id; }
+function rulesInsertImageFile(f) { albumPrepare(f).then(p => { if (!p || !rNode) return; rulesSync(); insertImageBlock(p.src); rulesChanged(); }); }
+function editableOf(node) { node = node && (node.nodeType === 1 ? node : node.parentElement); return node && node.closest && node.closest('#rPages [contenteditable=true]'); }
+function rSave() { const s = getSelection(); if (s.rangeCount && editableOf(s.anchorNode)) rSavedRange = s.getRangeAt(0).cloneRange(); }
+function rRestore() { const ed = rSavedRange && editableOf(rSavedRange.startContainer); if (ed) { ed.focus(); const s = getSelection(); s.removeAllRanges(); s.addRange(rSavedRange); } }
 function afterCmd() { rSave(); scheduleRulesSync(); updateToolbarState(); }
 function rSetSize(pt) {
   document.execCommand('styleWithCSS', false, false); document.execCommand('fontSize', false, '7');
   rDoc.querySelectorAll('font[size="7"]').forEach(f => { const s = document.createElement('span'); s.style.fontSize = pt + 'pt'; s.innerHTML = f.innerHTML; f.replaceWith(s); });
   afterCmd();
 }
-function rulesCmd(c) {
+function rulesCmd(c, btn) {
+  if (c === 'addblock') return addBlockMenu(btn, rSelBlock, rCurPage);
+  if (c === 'newpage') return rulesAddPageAfter(rCurPage && !String(rCurPage).startsWith('cover') ? rCurPage : null);
   rRestore();
   if (c === 'link') return rulesLinkDialog();
   if (c === 'table') return rulesTableDialog();
-  if (c === 'pagebreak') { document.execCommand('insertHTML', false, '<hr class="pbreak"><p><br></p>'); return afterCmd(); }
-  if (c === 'toc') { document.execCommand('insertHTML', false, '<div class="toc" contenteditable="false"></div><p><br></p>'); afterCmd(); updateTocBlocks(); return; }
   if (c === 'removeFormat') { document.execCommand('removeFormat'); document.execCommand('formatBlock', false, 'p'); return afterCmd(); }
   document.execCommand(c, false, null); afterCmd();
 }
 function updateToolbarState() {
-  const s = getSelection(); if (!s.rangeCount || !rDoc.contains(s.anchorNode)) return;
+  const s = getSelection(); if (!s.rangeCount || !editableOf(s.anchorNode)) return;
   ['bold', 'italic', 'underline', 'strikeThrough', 'justifyLeft', 'justifyCenter', 'justifyRight', 'justifyFull', 'insertUnorderedList', 'insertOrderedList'].forEach(c => { const b = $(`#rTb [data-cmd="${c}"]`); if (b) b.classList.toggle('on', document.queryCommandState(c)); });
   let n = s.anchorNode.nodeType === 1 ? s.anchorNode : s.anchorNode.parentElement;
   const blk = n.closest('h1,h2,h3,blockquote,pre,p,li,div'); const tag = blk ? blk.tagName.toLowerCase() : 'p';
@@ -1959,33 +2236,37 @@ function updateToolbarState() {
   const cs = getComputedStyle(n); const pt = Math.round(parseFloat(cs.fontSize) * 0.75);
   const sz = $('#rSize'); if ([...sz.options].some(o => +o.value === pt)) sz.value = pt;
   const ff = RFONTS.find(f => cs.fontFamily.replace(/"/g, "'").startsWith(f[0].split(',')[0])); if (ff) $('#rFont').value = ff[0];
-  renderRulesSide(true);
+  const tc = tableCtx(); const ctx = $('#rSideCtx'); if (ctx) ctx.classList.toggle('hastable', !!tc);
 }
+function ensureHeadingIds() { rDoc.querySelectorAll('h1,h2,h3').forEach(h => { if (!h.id || rDoc.querySelectorAll('#' + CSS.escape(h.id)).length > 1) h.id = 'h-' + uid(); }); }
+function headingsOf(root) { return [...root.querySelectorAll('h1,h2,h3')].filter(h => !h.closest('.toc') && h.textContent.trim()); }
+function placeCaret(el) { const r = document.createRange(); r.selectNodeContents(el); r.collapse(true); const s = getSelection(); s.removeAllRanges(); s.addRange(r); }
 
 /* ---------- liens ---------- */
 function currentLink() { const s = getSelection(); if (!s.rangeCount) return null; let n = s.anchorNode; n = n && (n.nodeType === 1 ? n : n.parentElement); return n && rDoc.contains(n) ? n.closest('a') : null; }
 function rulesLinkDialog(existing) {
+  ensureHeadingIds(); rulesSync();
   const a = existing || currentLink(); const href = a ? a.getAttribute('href') : '';
   const kind = !href ? 'url' : href.startsWith('#') ? 'head' : href.startsWith('bubble:') ? 'bubble' : 'url';
-  const hs = headingsOf(rDoc); const nodes = doc.nodes.filter(n => n.type !== 'root');
+  const hs = headingsOf(rDoc); const nodes = doc.nodes.filter(n => n.type !== 'root'); const pages = allPages(rNode.data);
   const sel = getSelection(); const txt = a ? a.textContent : (sel.rangeCount ? sel.toString() : '');
   const range = sel.rangeCount ? sel.getRangeAt(0).cloneRange() : null;
   dialog({ title: a ? 'Modifier le lien' : 'Insérer un lien', ok: 'Valider', alt: a ? 'Retirer le lien' : null, wide: true, body: `
-    <div class="seg" id="lk-kind"><button data-v="url" class="${kind === 'url' ? 'on' : ''}">${ico('link', 14)}Page web</button><button data-v="head" class="${kind === 'head' ? 'on' : ''}">${ico('mTitle', 14)}Titre du document</button><button data-v="bubble" class="${kind === 'bubble' ? 'on' : ''}">${ico('root', 14)}Bulle du projet</button></div>
+    <div class="seg" id="lk-kind"><button data-v="url" class="${kind === 'url' ? 'on' : ''}">${ico('link', 14)}Page web</button><button data-v="head" class="${kind === 'head' ? 'on' : ''}">${ico('mTitle', 14)}Titre ou feuille</button><button data-v="bubble" class="${kind === 'bubble' ? 'on' : ''}">${ico('root', 14)}Bulle du projet</button></div>
     <div class="row2"><span>Texte affiché</span><input type="text" id="lk-text" value="${esc(txt)}" placeholder="(texte sélectionné)"></div>
     <div class="row2" data-k="url"><span>Adresse</span><input type="url" id="lk-url" value="${kind === 'url' ? esc(href) : 'https://'}"></div>
-    <div class="row2" data-k="head"><span>Titre</span><select id="lk-head">${hs.map(h => `<option value="#${h.id}" ${href === '#' + h.id ? 'selected' : ''}>${'— '.repeat(+h.tagName[1] - 1)}${esc(h.textContent)}</option>`).join('') || '<option value="">(aucun titre dans le document)</option>'}</select></div>
+    <div class="row2" data-k="head"><span>Vers</span><select id="lk-head"><optgroup label="Feuilles">${pages.map((p, i) => `<option value="#pg-${p.page.id}" ${href === '#pg-' + p.page.id ? 'selected' : ''}>${i + 1} · ${esc(p.page.title)}</option>`).join('')}</optgroup><optgroup label="Titres">${hs.map(h => `<option value="#${h.id}" ${href === '#' + h.id ? 'selected' : ''}>${'— '.repeat(+h.tagName[1] - 1)}${esc(h.textContent)}</option>`).join('')}</optgroup></select></div>
     <div class="row2" data-k="bubble"><span>Bulle</span><select id="lk-bub">${nodes.map(n => `<option value="bubble:${n.id}" ${href === 'bubble:' + n.id ? 'selected' : ''}>${TYPES[n.type].label} · ${esc(n.name)}</option>`).join('')}</select></div>
-    <div class="note">Dans l'éditeur : clic sur un lien pour l'ouvrir ou le modifier. Les liens vers un titre restent actifs dans le PDF.</div>`,
+    <div class="note">Dans l'éditeur : clic sur un lien pour l'ouvrir ou le modifier. Les liens internes restent actifs dans le PDF.</div>`,
     onOpen: o => { const sync = v => o.querySelectorAll('[data-k]').forEach(r => r.style.display = r.dataset.k === v ? '' : 'none'); segWire('lk-kind', sync); sync(kind); } })
   .then(r => {
-    rDoc.focus(); if (range) { const s = getSelection(); s.removeAllRanges(); s.addRange(range); }
+    if (range) { const ed = editableOf(range.startContainer); if (ed) ed.focus(); const s = getSelection(); s.removeAllRanges(); s.addRange(range); }
     if (r === 'alt') { if (a) a.replaceWith(...a.childNodes); return afterCmd(); }
     if (!r) return;
     const k = r.querySelector('#lk-kind .on').dataset.v;
     const url = k === 'url' ? r.querySelector('#lk-url').value.trim() : k === 'head' ? r.querySelector('#lk-head').value : r.querySelector('#lk-bub').value;
     if (!url || url === 'https://') return;
-    const text = r.querySelector('#lk-text').value || (k === 'head' ? (r.querySelector('#lk-head').selectedOptions[0] || {}).textContent.replace(/^(— )+/, '') : k === 'bubble' ? (r.querySelector('#lk-bub').selectedOptions[0] || {}).textContent.replace(/^\S+\s/, '') : url);
+    const text = r.querySelector('#lk-text').value || (k === 'head' ? (r.querySelector('#lk-head').selectedOptions[0] || {}).textContent.replace(/^(— )+|^\d+ · /, '') : k === 'bubble' ? (r.querySelector('#lk-bub').selectedOptions[0] || {}).textContent.replace(/^\S+\s·\s/, '') : url);
     if (a) { a.setAttribute('href', url); if (r.querySelector('#lk-text').value) a.textContent = text; }
     else if (getSelection().toString()) document.execCommand('createLink', false, url);
     else document.execCommand('insertHTML', false, `<a href="${esc(url)}">${esc(text)}</a>&nbsp;`);
@@ -1995,13 +2276,14 @@ function rulesLinkDialog(existing) {
 let linkPopEl = null;
 function closeLinkPop() { if (linkPopEl) { linkPopEl.remove(); linkPopEl = null; } }
 function followLink(href) {
+  if (href.startsWith('#pg-')) return rulesGo(href.slice(4));
   if (href.startsWith('#')) { const h = document.getElementById(href.slice(1)); if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' }); else toast('Titre introuvable'); }
   else if (href.startsWith('bubble:')) { const n = nodeById(href.slice(7)); if (n) openNode(n.id); else toast('Bulle introuvable (supprimée ?)'); }
   else window.open(href, '_blank', 'noopener');
 }
 function showLinkPop(a) {
   closeLinkPop(); const href = a.getAttribute('href') || '';
-  const label = href.startsWith('#') ? 'Titre : ' + ((document.getElementById(href.slice(1)) || {}).textContent || 'titre') : href.startsWith('bubble:') ? 'Bulle : ' + ((nodeById(href.slice(7)) || {}).name || 'bulle') : href;
+  const label = href.startsWith('#pg-') ? 'Feuille : ' + (((findPage(rNode.data, href.slice(4)) || {}).page || {}).title || 'feuille') : href.startsWith('#') ? 'Titre : ' + ((document.getElementById(href.slice(1)) || {}).textContent || 'titre') : href.startsWith('bubble:') ? 'Bulle : ' + ((nodeById(href.slice(7)) || {}).name || 'bulle') : href;
   const p = document.createElement('div'); p.className = 'linkpop';
   p.innerHTML = `<span class="u">${esc(label)}</span><button class="mini primary" data-a="go">Ouvrir</button><button class="mini" data-a="edit">Modifier</button><button class="mini danger" data-a="rm">Retirer</button>`;
   document.body.appendChild(p); linkPopEl = p; const r = a.getBoundingClientRect();
@@ -2011,23 +2293,13 @@ function showLinkPop(a) {
   p.querySelector('[data-a=rm]').onclick = () => { closeLinkPop(); a.replaceWith(...a.childNodes); afterCmd(); };
 }
 
-/* ---------- images & tableaux ---------- */
-function rulesInsertImageFile(f) {
-  const r = new FileReader(); r.onload = () => {
-    const im = new Image(); im.onload = () => {
-      // réduit les très grandes images pour garder un .mmg raisonnable
-      const max = 1600; let src = r.result;
-      if (im.width > max) { const c = document.createElement('canvas'); c.width = max; c.height = Math.round(im.height * max / im.width); c.getContext('2d').drawImage(im, 0, 0, c.width, c.height); src = c.toDataURL(f.type === 'image/png' ? 'image/png' : 'image/jpeg', 0.9); }
-      rRestore(); const u = imgURL(src); blobToData.set(u, src); document.execCommand('insertHTML', false, `<img src="${u}" style="width:60%;display:block;margin:6px auto">`); afterCmd();
-    }; im.src = r.result;
-  }; r.readAsDataURL(f);
-}
+/* ---------- tableaux (dans un bloc texte) ---------- */
 function rulesTableDialog() {
   const range = getSelection().rangeCount ? getSelection().getRangeAt(0).cloneRange() : null;
   dialog({ title: 'Insérer un tableau', ok: 'Insérer', body: `<div class="row2"><span>Colonnes</span><input type="number" id="tb-c" value="3" min="1" max="12"></div><div class="row2"><span>Lignes</span><input type="number" id="tb-r" value="3" min="1" max="60"></div><label class="chk"><input type="checkbox" id="tb-h" checked> Première ligne = en-tête</label>` })
   .then(r => { if (!r) return; const C = clamp(+r.querySelector('#tb-c').value || 3, 1, 12), R = clamp(+r.querySelector('#tb-r').value || 3, 1, 60), H = r.querySelector('#tb-h').checked;
     let h = '<table><tbody>'; for (let i = 0; i < R; i++) { h += '<tr>'; for (let j = 0; j < C; j++) h += (H && !i) ? '<th>&nbsp;</th>' : '<td>&nbsp;</td>'; h += '</tr>'; } h += '</tbody></table><p><br></p>';
-    rDoc.focus(); if (range) { const s = getSelection(); s.removeAllRanges(); s.addRange(range); } document.execCommand('insertHTML', false, h); afterCmd(); });
+    if (range) { const ed = editableOf(range.startContainer); if (ed) ed.focus(); const s = getSelection(); s.removeAllRanges(); s.addRange(range); } document.execCommand('insertHTML', false, h); afterCmd(); });
 }
 function tableCtx() { const s = getSelection(); if (!s.rangeCount) return null; let n = s.anchorNode; n = n && (n.nodeType === 1 ? n : n.parentElement); const td = n && rDoc.contains(n) && n.closest('td,th'); return td ? { td, tr: td.parentElement, table: td.closest('table') } : null; }
 function tableOp(op) {
@@ -2037,97 +2309,167 @@ function tableOp(op) {
   if (op === 'col+') [...t.table.rows].forEach(r => { const ref = r.children[idx]; const n = document.createElement(ref && ref.tagName === 'TH' ? 'th' : 'td'); n.innerHTML = '&nbsp;'; ref ? ref.after(n) : r.appendChild(n); });
   if (op === 'col-') { if (t.tr.children.length > 1) [...t.table.rows].forEach(r => r.children[idx] && r.children[idx].remove()); else t.table.remove(); }
   if (op === 'del') t.table.remove();
-  afterCmd(); renderRulesSide();
+  afterCmd();
 }
 
-/* ---------- panneau de droite : mise en page ---------- */
-function renderRulesSide(contextOnly) {
-  if (!rNode) return; const L = rNode.data.layout; const tc = tableCtx();
-  const ctxHtml = (rSelImg ? `<div class="panel"><div class="ph">Image sélectionnée</div><div class="pb">
-      <div class="prow"><label>Largeur</label><input type="range" id="ri-w" min="10" max="100" value="${parseInt(rSelImg.style.width) || 100}" style="flex:1"><span class="val" id="ri-wv" style="width:40px;text-align:right;color:var(--amber)">${parseInt(rSelImg.style.width) || 100}%</span></div>
-      <div class="seg" id="ri-al"><button data-v="left">Gauche</button><button data-v="center">Centre</button><button data-v="right">Droite</button></div>
-      <button class="mini danger" id="ri-del">${ico('trash', 14)}Supprimer l'image</button></div></div>` : '') +
-    (tc ? `<div class="panel"><div class="ph">Tableau</div><div class="pb"><div style="display:flex;gap:5px;flex-wrap:wrap">
-      <button class="mini" data-t="row+">＋ Ligne</button><button class="mini" data-t="row-">− Ligne</button><button class="mini" data-t="col+">＋ Colonne</button><button class="mini" data-t="col-">− Colonne</button><button class="mini danger" data-t="del">${ico('trash', 14)}Tableau</button></div></div></div>` : '');
-  if (contextOnly && $('#rSideCtx')) { $('#rSideCtx').innerHTML = ctxHtml; wireRulesCtx(); return; }
-  $('#rSide').innerHTML = `<div id="rSideCtx">${ctxHtml}</div>
-    <div class="panel"><div class="ph">Mise en page</div><div class="pb">
+/* ---------- panneau de droite ---------- */
+function renderRulesSide() {
+  if (!rNode) return; const d = rNode.data, L = d.layout, fb = rSelBlock && findBlock(d, rSelBlock), b = fb && fb.block;
+  const isCover = String(rCurPage).startsWith('cover-'), cw = isCover && rCurPage.slice(6), C = cw && d.covers[cw], fp = !isCover && findPage(d, rCurPage);
+  const blockPanel = b ? `<div class="panel"><div class="ph">${ico(BLOCKS[b.type].ic, 14)} Bloc ${BLOCKS[b.type].label}</div><div class="pb">
+      ${b.type === 'image' ? `<button class="bigbtn" id="rbi-pick">${ico('image', 18)}${b.src ? 'Changer l\'image' : 'Choisir une image'}</button>
+        <div class="prow"><label>Largeur</label><input type="range" id="rbi-w" min="10" max="100" value="${b.w}" style="flex:1"><span class="val" id="rbi-wv" style="width:40px;text-align:right;color:var(--amber)">${b.w}%</span></div>
+        <div class="seg" id="rbi-al"><button data-v="left" class="${b.align === 'left' ? 'on' : ''}">Gauche</button><button data-v="center" class="${b.align === 'center' ? 'on' : ''}">Centre</button><button data-v="right" class="${b.align === 'right' ? 'on' : ''}">Droite</button></div>` : ''}
+      ${b.type === 'box' ? `<div class="prow"><label>Fond</label>${swatches('rbx-col', BOX_COLORS, b.color)}</div>` : ''}
+      ${b.type === 'space' ? `<div class="prow"><label>Hauteur</label><input type="range" id="rbs-h" min="2" max="120" value="${b.h}" style="flex:1"><span id="rbs-hv" style="width:44px;text-align:right;color:var(--amber)">${b.h} mm</span></div>` : ''}
+      <div class="tilegrid t3">
+        <button class="tile sm" data-bop="up" title="Monter le bloc">${ico('layerUp', 16)}<span>Monter</span></button>
+        <button class="tile sm" data-bop="down" title="Descendre le bloc">${ico('layerDown', 16)}<span>Descendre</span></button>
+        <button class="tile sm" data-bop="dup" title="Dupliquer le bloc">${ico('copy', 16)}<span>Copier</span></button>
+        <button class="tile sm" data-bop="prevpage" title="Envoyer à la fin de la feuille précédente">${ico('prev', 16)}<span>Feuille</span></button>
+        <button class="tile sm" data-bop="nextpage" title="Envoyer au début de la feuille suivante (créée si besoin)">${ico('next', 16)}<span>Feuille</span></button>
+        <button class="tile sm danger" data-bop="del" title="Supprimer le bloc">${ico('trash', 16)}<span>Effacer</span></button>
+      </div></div></div>` : '';
+  const tablePanel = `<div class="panel tblp"><div class="ph">Tableau</div><div class="pb"><div style="display:flex;gap:5px;flex-wrap:wrap">
+      <button class="mini" data-t="row+">＋ Ligne</button><button class="mini" data-t="row-">− Ligne</button><button class="mini" data-t="col+">＋ Colonne</button><button class="mini" data-t="col-">− Colonne</button><button class="mini danger" data-t="del">${ico('trash', 14)}Tableau</button></div></div></div>`;
+  const pagePanel = fp ? `<div class="panel"><div class="ph">${ico('mText', 14)} Feuille</div><div class="pb">
+      <div class="prow"><label>Titre</label><input type="text" id="rp-title" value="${esc(fp.page.title)}"></div>
+      <div class="prow"><label>Chapitre</label><select id="rp-chap"><option value="">(hors chapitre)</option>${d.book.filter(x => x.kind === 'chapter').map(c => `<option value="${c.id}" ${fp.chapter === c ? 'selected' : ''}>${esc(c.title)}</option>`).join('')}</select></div>
+      <div class="tilegrid t2"><button class="tile sm" id="rp-add">${ico('plus', 16)}<span>Feuille après</span></button><button class="tile sm danger" id="rp-del">${ico('trash', 16)}<span>Supprimer</span></button></div></div></div>` : '';
+  const coverPanel = C ? `<div class="panel"><div class="ph">${ico('image', 14)} ${cw === 'front' ? '1re' : '4e'} de couverture</div><div class="pb">
+      <button class="bigbtn" id="rc-img">${ico('image', 18)}${C.bg ? 'Changer l\'image de fond' : 'Image de fond'}</button>
+      ${C.bg ? `<button class="lnk danger" id="rc-noimg">${ico('close', 14)}Retirer l'image</button>` : ''}
+      <div class="prow"><label>Fond</label><input type="color" id="rc-col" value="${C.color}" style="flex:1"></div>
+      <div class="prow"><label>Texte</label><input type="color" id="rc-ink" value="${C.ink}" style="flex:1"></div>
+      <div class="note">Écris le titre et le sous-titre directement sur la couverture.</div></div></div>` : '';
+  $('#rSide').innerHTML = `<div id="rSideCtx">${blockPanel}${tablePanel}${coverPanel}${pagePanel}</div>
+    <div class="panel"><div class="ph">${ico('format', 14)} Mise en page</div><div class="pb">
       <div class="prow"><label>Format</label><select id="rl-format">${Object.keys(PAGE_SIZES).map(k => `<option ${L.format === k ? 'selected' : ''}>${k}</option>`).join('')}</select></div>
       <div class="prow"><label>Orientation</label><select id="rl-orient"><option value="portrait" ${L.orient === 'portrait' ? 'selected' : ''}>Portrait</option><option value="landscape" ${L.orient === 'landscape' ? 'selected' : ''}>Paysage</option></select></div>
       <div class="prow"><label>Marges</label><input type="range" id="rl-margin" min="5" max="40" value="${L.margin}" style="flex:1"><span style="width:44px;text-align:right;color:var(--amber)" id="rl-marginv">${L.margin} mm</span></div>
-      <div class="prow"><label>Colonnes</label><div class="seg" id="rl-cols" style="flex:1"><button data-v="1" class="${+L.cols !== 2 ? 'on' : ''}">1</button><button data-v="2" class="${+L.cols === 2 ? 'on' : ''}">2</button></div></div>
+      <div class="prow"><label>Fond de page</label><input type="color" id="rl-bg" value="${L.bg}" style="flex:1"></div>
     </div></div>
-    <div class="panel"><div class="ph">Texte de base</div><div class="pb">
+    <div class="panel"><div class="ph">${ico('image', 14)} Filigrane</div><div class="pb">
+      <button class="bigbtn" id="rl-wm">${ico('image', 18)}${L.wm ? 'Changer le filigrane' : 'Importer un filigrane'}</button>
+      ${L.wm ? `<div class="prow"><label>Opacité</label><input type="range" id="rl-wmo" min="3" max="60" value="${Math.round(L.wmOpacity * 100)}" style="flex:1"><span id="rl-wmov" style="width:40px;text-align:right;color:var(--amber)">${Math.round(L.wmOpacity * 100)}%</span></div>
+        <div class="prow"><label>Taille</label><input type="range" id="rl-wms" min="15" max="100" value="${L.wmSize}" style="flex:1"><span id="rl-wmsv" style="width:40px;text-align:right;color:var(--amber)">${L.wmSize}%</span></div>
+        <button class="lnk danger" id="rl-wmx">${ico('close', 14)}Retirer le filigrane</button>` : '<div class="note">Une image discrète derrière le texte de chaque feuille (pas sur les couvertures).</div>'}
+    </div></div>
+    <div class="panel"><div class="ph">${ico('rules', 14)} Couvertures</div><div class="pb">
+      <label class="chk"><input type="checkbox" id="rl-cf" ${d.covers.front.on ? 'checked' : ''}> 1re de couverture</label>
+      <label class="chk"><input type="checkbox" id="rl-cb" ${d.covers.back.on ? 'checked' : ''}> 4e de couverture</label>
+    </div></div>
+    <div class="panel"><div class="ph">${ico('mText', 14)} Texte de base</div><div class="pb">
       <div class="prow"><label>Police</label><select id="rl-font">${RFONTS.map(f => `<option value="${esc(f[0])}" ${L.font === f[0] ? 'selected' : ''}>${f[1]}</option>`).join('')}</select></div>
       <div class="prow"><label>Taille</label><select id="rl-size">${[8, 9, 10, 11, 12, 13, 14, 16].map(s => `<option value="${s}" ${+L.size === s ? 'selected' : ''}>${s} pt</option>`).join('')}</select></div>
       <div class="prow"><label>Interligne</label><input type="range" id="rl-lh" min="1" max="2" step="0.05" value="${L.lh}" style="flex:1"><span style="width:34px;text-align:right;color:var(--amber)" id="rl-lhv">${L.lh}</span></div>
       <div class="prow"><label>Couleur</label><input type="color" id="rl-color" value="${L.color}" style="flex:1"></div>
       <div class="prow"><label>Titres 1</label><input type="color" id="rl-h1" value="${L.h1color}" style="flex:1"></div>
-      <label class="chk"><input type="checkbox" id="rl-num" ${L.num ? 'checked' : ''}> Numéroter les titres (1. / 1.1 / 1.1.1)</label>
+      <label class="chk"><input type="checkbox" id="rl-num" ${L.num ? 'checked' : ''}> Numéroter les titres et les chapitres</label>
     </div></div>
-    <div class="panel"><div class="ph">En-tête & pied de page (PDF)</div><div class="pb">
+    <div class="panel"><div class="ph">En-tête & pied de page</div><div class="pb">
       <div class="prow"><label>En-tête</label><input type="text" id="rl-header" value="${esc(L.header)}" placeholder="ex. ${esc(doc.name)}"></div>
       <div class="prow"><label>Pied</label><input type="text" id="rl-footer" value="${esc(L.footer)}" placeholder="ex. © 2026"></div>
       <label class="chk"><input type="checkbox" id="rl-pn" ${L.pageNum ? 'checked' : ''}> Numéros de page</label>
-    </div></div>
-    <div class="panel"><div class="ph">Raccourcis</div><div class="pb"><div class="note">Ctrl+B / I / U : gras, italique, souligné · Ctrl+K : lien · Ctrl+Alt+1/2/3 : titres · Ctrl+Alt+0 : paragraphe · Ctrl+Entrée : saut de page.</div></div></div>`;
-  const setL = (k, v) => { L[k] = v; applyRulesLayout(); renderRulesToc(); updateTocBlocks(); updateRulesStats(); touch(); };
-  $('#rl-format').onchange = e => setL('format', e.target.value);
-  $('#rl-orient').onchange = e => setL('orient', e.target.value);
-  $('#rl-margin').oninput = e => { $('#rl-marginv').textContent = e.target.value + ' mm'; setL('margin', +e.target.value); };
-  segWire('rl-cols', v => setL('cols', +v));
-  $('#rl-font').onchange = e => setL('font', e.target.value);
-  $('#rl-size').onchange = e => setL('size', +e.target.value);
-  $('#rl-lh').oninput = e => { $('#rl-lhv').textContent = e.target.value; setL('lh', +e.target.value); };
-  $('#rl-color').oninput = e => setL('color', e.target.value);
-  $('#rl-h1').oninput = e => setL('h1color', e.target.value);
-  $('#rl-num').onchange = e => setL('num', e.target.checked);
-  $('#rl-header').oninput = e => setL('header', e.target.value);
-  $('#rl-footer').oninput = e => setL('footer', e.target.value);
-  $('#rl-pn').onchange = e => setL('pageNum', e.target.checked);
-  wireRulesCtx();
-}
-function wireRulesCtx() {
-  if (rSelImg && $('#ri-w')) {
-    const im = rSelImg;
-    $('#ri-w').oninput = e => { im.style.width = e.target.value + '%'; $('#ri-wv').textContent = e.target.value + '%'; scheduleRulesSync(); };
-    segWire('ri-al', v => { im.style.display = 'block'; im.style.float = ''; im.style.margin = v === 'center' ? '6px auto' : v === 'left' ? '6px auto 6px 0' : '6px 0 6px auto'; scheduleRulesSync(); });
-    $('#ri-del').onclick = () => { im.remove(); rSelImg = null; afterCmd(); renderRulesSide(); };
+    </div></div>`;
+  const on = (id, ev, fn) => { const el = document.getElementById(id); if (el) el[ev] = fn; };
+  const setL = (k, v, full) => { rulesSync(); L[k] = v; full === false ? (renderPages(), touch()) : rulesChanged(); };
+  on('rl-format', 'onchange', e => setL('format', e.target.value)); on('rl-orient', 'onchange', e => setL('orient', e.target.value));
+  on('rl-margin', 'oninput', e => { $('#rl-marginv').textContent = e.target.value + ' mm'; setL('margin', +e.target.value, false); });
+  on('rl-bg', 'oninput', e => setL('bg', e.target.value, false));
+  on('rl-wm', 'onclick', () => { const i = $('#rImg'); i.dataset.wm = '1'; i.click(); });
+  on('rl-wmo', 'oninput', e => { $('#rl-wmov').textContent = e.target.value + '%'; setL('wmOpacity', +e.target.value / 100, false); });
+  on('rl-wms', 'oninput', e => { $('#rl-wmsv').textContent = e.target.value + '%'; setL('wmSize', +e.target.value, false); });
+  on('rl-wmx', 'onclick', () => setL('wm', null));
+  on('rl-cf', 'onchange', e => { rulesSync(); d.covers.front.on = e.target.checked; if (e.target.checked) rCurPage = 'cover-front'; rulesChanged(); });
+  on('rl-cb', 'onchange', e => { rulesSync(); d.covers.back.on = e.target.checked; if (e.target.checked) rCurPage = 'cover-back'; rulesChanged(); });
+  on('rl-font', 'onchange', e => setL('font', e.target.value, false)); on('rl-size', 'onchange', e => setL('size', +e.target.value, false));
+  on('rl-lh', 'oninput', e => { $('#rl-lhv').textContent = e.target.value; setL('lh', +e.target.value, false); });
+  on('rl-color', 'oninput', e => setL('color', e.target.value, false)); on('rl-h1', 'oninput', e => setL('h1color', e.target.value, false));
+  on('rl-num', 'onchange', e => setL('num', e.target.checked));
+  on('rl-header', 'oninput', e => setL('header', e.target.value, false)); on('rl-footer', 'oninput', e => setL('footer', e.target.value, false));
+  on('rl-pn', 'onchange', e => setL('pageNum', e.target.checked, false));
+  if (b) {
+    on('rbi-pick', 'onclick', () => pickBlockImage(b.id));
+    on('rbi-w', 'oninput', e => { $('#rbi-wv').textContent = e.target.value + '%'; b.w = +e.target.value; const f = rDoc.querySelector(`.rblk[data-bid="${b.id}"] figure`); if (f) f.style.setProperty('--w', b.w + '%'); scheduleRulesSync(); });
+    segWire('rbi-al', v => { rulesSync(); b.align = v; rulesChanged(); });
+    $$('#rbx-col button').forEach(x => x.onclick = () => { rulesSync(); b.color = x.dataset.c; rulesChanged(); });
+    on('rbs-h', 'oninput', e => { $('#rbs-hv').textContent = e.target.value + ' mm'; b.h = +e.target.value; const s = rDoc.querySelector(`.rblk[data-bid="${b.id}"] .rb-space`); if (s) { s.style.height = b.h + 'mm'; s.querySelector('span').textContent = `espace ${b.h} mm`; } scheduleRulesSync(); });
+    $$('#rSide [data-bop]').forEach(x => x.onclick = () => blockOp(b.id, x.dataset.bop));
   }
-  $$('#rSideCtx [data-t]').forEach(b => { b.onmousedown = e => e.preventDefault(); b.onclick = () => tableOp(b.dataset.t); });
+  $$('#rSide [data-t]').forEach(x => { x.onmousedown = e => e.preventDefault(); x.onclick = () => tableOp(x.dataset.t); });
+  if (fp) {
+    on('rp-title', 'oninput', e => { fp.page.title = e.target.value || 'Feuille'; touch(); clearTimeout(rp_t); rp_t = setTimeout(() => { renderRulesToc(); const l = rDoc.querySelector(`.rwrap[data-wrap="${fp.page.id}"] .rlabel`); if (l) l.textContent = fp.page.title; rDoc.querySelectorAll('.toc').forEach(t => t.innerHTML = tocBlockHtml(d)); }, 300); });
+    on('rp-chap', 'onchange', e => { rulesSync(); const v = e.target.value; fp.list.splice(fp.i, 1); if (v) d.book.find(x => x.id === v).pages.push(fp.page); else d.book.push(fp.page); rulesChanged(); });
+    on('rp-add', 'onclick', () => rulesAddPageAfter(fp.page.id)); on('rp-del', 'onclick', () => deletePage(fp.page.id));
+  }
+  if (C) {
+    on('rc-img', 'onclick', () => { const i = $('#rImg'); i.dataset.cov = cw; i.click(); });
+    on('rc-noimg', 'onclick', () => { rulesSync(); C.bg = null; rulesChanged(); });
+    on('rc-col', 'oninput', e => { C.color = e.target.value; const s = rDoc.querySelector(`[data-pid="cover-${cw}"]`); if (s) s.style.background = C.color; scheduleRulesSync(); });
+    on('rc-ink', 'oninput', e => { C.ink = e.target.value; const s = rDoc.querySelector(`[data-pid="cover-${cw}"] .rcov`); if (s) s.style.color = C.ink; scheduleRulesSync(); });
+  }
+  updateToolbarState();
 }
+let rp_t = 0;
 
 /* ---------- événements de l'éditeur ---------- */
-rDoc.addEventListener('input', () => { scheduleRulesSync(); });
+rDoc.addEventListener('input', e => { if (e.target.closest('[contenteditable=true]')) scheduleRulesSync(); });
 const toolbarSoon = rafOnce(() => updateToolbarState());
 rDoc.addEventListener('keyup', () => { rSave(); toolbarSoon(); });
 rDoc.addEventListener('mouseup', () => { rSave(); setTimeout(updateToolbarState, 0); });
+rDoc.addEventListener('focusin', e => { const b = e.target.closest('.rblk[data-bid]'); if (b && b.dataset.bid !== rSelBlock) selectBlock(b.dataset.bid); const w = e.target.closest('.rwrap'); if (w && !b && w.dataset.wrap !== rCurPage) rulesGo(w.dataset.wrap); });
 rDoc.addEventListener('click', e => {
-  const img = e.target.closest('img'); rDoc.querySelectorAll('img.sel').forEach(i => i !== img && i.classList.remove('sel'));
-  if (img) { img.classList.add('sel'); rSelImg = img; renderRulesSide(true); } else if (rSelImg) { rSelImg = null; renderRulesSide(true); }
-  const te = e.target.closest('.toc .te'); if (te) { const h = document.getElementById(te.dataset.target); if (h) h.scrollIntoView({ behavior: 'smooth', block: 'start' }); return; }
+  const add = e.target.closest('.radd'); if (add) { e.stopPropagation(); return addBlockMenu(add, add.dataset.after); }
+  const end = e.target.closest('.raddend'); if (end) { e.stopPropagation(); return addBlockMenu(end, null, end.dataset.endof); }
+  const te = e.target.closest('.toc .te'); if (te) { rulesGo(te.dataset.target); return; }
+  const blk = e.target.closest('.rblk[data-bid]');
+  if (blk) { if (blk.dataset.bid !== rSelBlock) selectBlock(blk.dataset.bid); if (blk.dataset.type === 'image' && e.target.closest('img,.rb-noimg')) pickBlockImage(blk.dataset.bid); }
+  else { const w = e.target.closest('.rwrap'); if (w) { if (rSelBlock) { rSelBlock = null; rDoc.querySelectorAll('.rblk.sel').forEach(x => x.classList.remove('sel')); } if (w.dataset.wrap !== rCurPage) rulesGo(w.dataset.wrap); else renderRulesSide(); } }
   const a = e.target.closest('a'); if (a) { e.preventDefault(); if (e.ctrlKey || e.metaKey) followLink(a.getAttribute('href') || ''); else showLinkPop(a); } else closeLinkPop();
 });
 rDoc.addEventListener('keydown', e => {
   const k = e.key.toLowerCase();
   if ((e.ctrlKey || e.metaKey) && k === 'k') { e.preventDefault(); rSave(); rulesLinkDialog(); }
   else if ((e.ctrlKey || e.metaKey) && e.altKey && '0123'.includes(e.key)) { e.preventDefault(); document.execCommand('formatBlock', false, e.key === '0' ? 'p' : 'h' + e.key); afterCmd(); }
-  else if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); rulesCmd('pagebreak'); }
-  else if (e.key === 'Tab') { e.preventDefault(); const t = tableCtx(); if (t) { const cells = [...t.table.querySelectorAll('td,th')]; const i = cells.indexOf(t.td) + (e.shiftKey ? -1 : 1); if (cells[i]) placeCaret(cells[i]); else if (!e.shiftKey) { tableOp('row+'); placeCaret(t.table.rows[t.table.rows.length - 1].cells[0]); } } else document.execCommand(e.shiftKey ? 'outdent' : 'indent'); }
-  else if ((e.key === 'Delete' || e.key === 'Backspace') && rSelImg) { e.preventDefault(); rSelImg.remove(); rSelImg = null; afterCmd(); renderRulesSide(); }
+  else if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') { e.preventDefault(); rulesCmd('newpage'); }
+  else if (e.key === 'Tab') { const t = tableCtx(); if (!t) return; e.preventDefault(); const cells = [...t.table.querySelectorAll('td,th')]; const i = cells.indexOf(t.td) + (e.shiftKey ? -1 : 1); if (cells[i]) placeCaret(cells[i]); else if (!e.shiftKey) { tableOp('row+'); placeCaret(t.table.rows[t.table.rows.length - 1].cells[0]); } }
+  else if (e.target.closest('.rcov-t,.rcov-s,figcaption') && e.key === 'Enter') { e.preventDefault(); e.target.blur(); }
 });
 rDoc.addEventListener('paste', e => {
-  // images collées → intégrées ; texte d'autres logiciels → nettoyé des styles lourds
+  if (!e.target.closest('[contenteditable=true]')) return;
   const items = [...(e.clipboardData || {}).items || []]; const img = items.find(i => i.type.startsWith('image/'));
   if (img) { e.preventDefault(); rulesInsertImageFile(img.getAsFile()); return; }
+  if (e.target.closest('.rcov-t,.rcov-s,figcaption')) { e.preventDefault(); document.execCommand('insertText', false, e.clipboardData.getData('text/plain')); return; }
   const html = e.clipboardData.getData('text/html');
   if (html) { e.preventDefault(); const t = document.createElement('div'); t.innerHTML = html;
     t.querySelectorAll('script,style,meta,link,o\\:p').forEach(x => x.remove());
     t.querySelectorAll('*').forEach(x => { x.removeAttribute('class'); x.removeAttribute('id'); const st = x.getAttribute('style') || ''; const keep = st.match(/(font-weight|font-style|text-decoration|color)\s*:[^;]+/gi); if (keep) x.setAttribute('style', keep.join(';')); else x.removeAttribute('style'); });
     document.execCommand('insertHTML', false, t.innerHTML); afterCmd(); }
 });
-rDoc.addEventListener('drop', e => { const f = [...(e.dataTransfer || {}).files || []].find(f => f.type.startsWith('image/')); if (f) { e.preventDefault(); e.stopPropagation(); rulesInsertImageFile(f); } });
-$('#rScroll').addEventListener('mousedown', e => { if (e.target.id === 'rScroll' || e.target.id === 'rPage') { e.preventDefault(); rDoc.focus(); } });
+// glisser un bloc par sa poignée, vers une autre place ou une autre feuille
+let rbDrag = null;
+rDoc.addEventListener('dragstart', e => { const h = e.target.closest && e.target.closest('.rbh'); if (!h) return; rbDrag = h.parentNode.dataset.bid; e.dataTransfer.effectAllowed = 'move'; e.dataTransfer.setData('text/plain', 'bloc'); h.parentNode.classList.add('dragging'); });
+rDoc.addEventListener('dragend', () => { rbDrag = null; rDoc.querySelectorAll('.dragging,.dz-b,.dz-a').forEach(x => x.classList.remove('dragging', 'dz-b', 'dz-a')); });
+rDoc.addEventListener('dragover', e => {
+  if (!rbDrag) { if ([...(e.dataTransfer || {}).types || []].includes('Files')) e.preventDefault(); return; }
+  const t = e.target.closest('.rblk[data-bid]'), sheet = e.target.closest('.rsheet:not(.cover)'); if (!t && !sheet) return; e.preventDefault();
+  rDoc.querySelectorAll('.dz-b,.dz-a').forEach(x => x.classList.remove('dz-b', 'dz-a'));
+  if (t) { const r = t.getBoundingClientRect(); t.classList.add(e.clientY < r.top + r.height / 2 ? 'dz-b' : 'dz-a'); }
+});
+rDoc.addEventListener('drop', e => {
+  const f = [...(e.dataTransfer || {}).files || []].find(f => f.type.startsWith('image/'));
+  if (f && !rbDrag) { e.preventDefault(); e.stopPropagation(); const w = e.target.closest('.rwrap'); if (w && !w.dataset.wrap.startsWith('cover')) rCurPage = w.dataset.wrap; const b = e.target.closest('.rblk[data-bid]'); if (b) rSelBlock = b.dataset.bid; rulesInsertImageFile(f); return; }
+  if (!rbDrag) return; e.preventDefault(); rulesSync();
+  const d = rNode.data, src = findBlock(d, rbDrag); if (!src) return;
+  const t = e.target.closest('.rblk[data-bid]'), sheet = e.target.closest('.rsheet:not(.cover)');
+  if (t && t.dataset.bid === rbDrag) return;
+  src.page.blocks.splice(src.i, 1);
+  if (t) { const r = t.getBoundingClientRect(), dst = findBlock(d, t.dataset.bid); dst.page.blocks.splice(dst.i + (e.clientY < r.top + r.height / 2 ? 0 : 1), 0, src.block); }
+  else if (sheet) { const p = findPage(d, sheet.dataset.pid); if (p) p.page.blocks.push(src.block); }
+  if (!src.page.blocks.length) src.page.blocks.push(newBlock('text'));
+  rSelBlock = src.block.id; rbDrag = null; rulesChanged();
+});
 $('#rvPdf').onclick = () => { rulesSync(); exportSinglePdf(rNode.id); };
 $('#rvPrint').onclick = () => { rulesSync(); openPrintManager([rNode.id]); };
 
@@ -3101,7 +3443,7 @@ async function exportPNG() {
   const c = currentCard(); const side = ui.editSide === 'verso' ? 'verso' : 'recto';
   const scale = clamp(3000 / Math.max(project.card.w, project.card.h), 0.5, 4);
   const cv = await renderCardCanvas(project, c, side, scale);
-  cv.toBlob(b => { download(b, slug(c.name) + '_' + side + '.png'); toast('PNG exporté'); });
+  cv.toBlob(b => { download(b, exportName(pieceNode ? pieceNode.name + (side === 'verso' ? ' verso' : '') : c.name, 'png')); toast('PNG exporté'); });
 }
 
 /* ---------- navigation : bulle ↔ éditeur ---------- */
@@ -3811,6 +4153,7 @@ function bubbleMenu(n, cx, cy) {
     { ic: 'copy', text: 'Dupliquer', fn: () => duplicateNode(n) },
     { ic: 'link', text: 'Lier à une autre bulle…', fn: () => { setHubTool('link'); linkFrom = n.id; hint(`Clique la bulle à lier à « ${n.name} ».`); } },
     { ic: 'unlink', text: 'Délier tout', fn: () => unlinkAll(n) },
+    ...(n.type === 'album' ? [{ ic: 'download', text: 'Télécharger l\'album (.zip)', fn: () => albumZip(n) }] : []),
     ...(TYPES[n.type].piece || n.type === 'rules' || n.type === 'map' ? [{ ic: 'print', text: 'Imprimer…', fn: () => openPrintManager([n.id]) }] : []),
     '-', { ic: 'trash', text: 'Supprimer', danger: true, fn: () => deleteNodes([...sel]) }]);
 }
@@ -5531,7 +5874,7 @@ var mapEnter, mapLeave, mapThumb, mapRenderCanvas, mapExportPNG;
   function exportPNG(){
     try{
       var tmp=renderAll(1);
-      tmp.toBlob(function(bl){ if(bl) download(bl, slug(doc.name)+'_'+slug(mapNode ? mapNode.name : 'map')+'.png'); }, 'image/png');
+      tmp.toBlob(function(bl){ if(bl) download(bl, exportName(mapNode ? mapNode.name : 'map', 'png')); }, 'image/png');
     }catch(err){ showMessage("Erreur","Impossible d'exporter l'image. "+err.message, false, null); }
   }
   // rendu d'une autre map (aperçu du volet, impression) : on prête ses objets au moteur le temps du dessin
@@ -5619,8 +5962,20 @@ function albumRender() {
 (function bindAlbumView() {
   $('#avName').oninput = e => { if (albumNode) { setNodeName(albumNode, e.target.value || ' '); touch(); updateTitle(); } };
   $('#avName').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === 'Escape') e.target.blur(); e.stopPropagation(); });
+  $('#avZip').onclick = () => { if (albumNode) albumZip(albumNode); };
   $('#avFile').onchange = e => { const f = [...e.target.files]; e.target.value = ''; if (albumNode) albumAddFiles(albumNode, f); };
 })();
+
+/* ---------- téléchargement de l'album en .ZIP : PHOTO_JEU_DATE.ext ---------- */
+async function albumZip(n) {
+  const ims = (n.data.images || []); if (!ims.length) return toast('Album vide : rien à télécharger');
+  toast('Préparation du .ZIP…');
+  try {
+    await loadLib('jszip'); const zip = new JSZip(), used = new Set();
+    for (const im of ims) { const b = await (await fetch(im.src)).blob(), ext = (b.type.split('/')[1] || 'png').replace('jpeg', 'jpg').replace('svg+xml', 'svg'); zip.file(uniqueName(exportName(im.name || 'image', ext), used), b); }
+    const blob = await zip.generateAsync({ type: 'blob' }); download(blob, exportName(n.name, 'zip')); toast(`Album téléchargé : ${plural(ims.length, 'image', 'images')}`);
+  } catch (e) { infoDlg('Téléchargement impossible', `<div>${esc(e.message || String(e))}</div><div class="note">L'outil ZIP se télécharge depuis Internet la première fois : vérifie la connexion.</div>`); }
+}
 
 /* ---------- aperçu (volet de droite) : mosaïque des premières images ---------- */
 function albumCollage(n) {
@@ -5791,70 +6146,10 @@ async function mapPdf(n, onProg) {
 let rHost = null;
 function rulesHost() { if (!rHost) { rHost = document.createElement('div'); rHost.style.cssText = 'position:fixed;left:-30000px;top:0;pointer-events:none'; document.body.appendChild(rHost); } return rHost; }
 function paginateRules(n) {
-  const d = n.data, L = d.layout, pg = pageMM(L), pw = pg.w * MM2PX, ph = pg.h * MM2PX, m = L.margin * MM2PX, ch = ph - 2 * m;
-  const host = rulesHost(); host.innerHTML = '';
-  const src = document.createElement('div'); src.innerHTML = d.html;
-  // numérotation figée (les compteurs CSS repartiraient à zéro sur chaque page)
-  const hs = headingsOf(src); if (L.num) headingNumbers(hs).forEach((t, i) => hs[i].insertAdjacentHTML('afterbegin', `<span class="hn">${t} </span>`));
-  hs.forEach(h => { if (!h.id) h.id = 'h-' + uid(); });
-  src.querySelectorAll('.toc').forEach(t => { t.removeAttribute('contenteditable'); t.innerHTML = tocHtml(headingsOf(src).map(h => { const c = h.cloneNode(true); c.querySelectorAll('.hn').forEach(x => x.remove()); h._clean = c.textContent; return h; }).map(h => ({ id: h.id, tagName: h.tagName, textContent: h._clean })), L.num ? headingNumbers(hs) : [], null); });
-  // les éléments « en ligne » isolés (texte, gras, lien, <br>…) sont regroupés dans un paragraphe
-  const INLINE = /^(B|I|U|S|EM|STRONG|SPAN|A|FONT|BR|SUB|SUP|MARK|SMALL|CODE|STRIKE)$/;
-  const blocks = []; let run = null;
-  [...src.childNodes].forEach(nd => {
-    const inline = nd.nodeType === 3 || (nd.nodeType === 1 && INLINE.test(nd.tagName));
-    if (inline) { if (nd.nodeType === 3 && !nd.textContent.trim() && !run) return; if (!run) { run = document.createElement('p'); blocks.push(run); } run.appendChild(nd.cloneNode(true)); }
-    else if (nd.nodeType === 1) { run = null; blocks.push(nd); }
-  });
-  const pages = []; let body = null;
-  const newPage = () => {
-    const w = document.createElement('div'); w.className = 'rpage'; w.style.cssText = `width:${pw}px;height:${ph}px;padding:${m}px;position:relative;overflow:hidden;background:#fff;color:${L.color};box-sizing:border-box`;
-    const b = document.createElement('div'); b.className = 'rdoc' + (+L.cols === 2 ? ' cols2' : '');
-    b.style.cssText = `height:${ch}px;overflow:hidden;font-family:${L.font};font-size:${L.size}pt;line-height:${L.lh};column-fill:auto`;
-    w.appendChild(b); host.appendChild(w); pages.push(w); body = b;
-  };
-  const over = () => body.scrollHeight > body.clientHeight + 1 || body.scrollWidth > body.clientWidth + 1;
-  const isHead = el => el && /^H[1-3]$/.test(el.tagName);
-  const split = el => {
-    const kids = [...el.children];
-    if (el.tagName === 'TABLE') { const rows = [...el.querySelectorAll('tr')]; if (rows.length < 2) return null; const k = Math.ceil(rows.length / 2); const a = el.cloneNode(false), b = el.cloneNode(false); const ta = document.createElement('tbody'), tb = document.createElement('tbody'); rows.slice(0, k).forEach(r => ta.appendChild(r.cloneNode(true))); rows.slice(k).forEach(r => tb.appendChild(r.cloneNode(true))); a.appendChild(ta); b.appendChild(tb); return [a, b]; }
-    if ((el.tagName === 'UL' || el.tagName === 'OL') && kids.length > 1) { const k = Math.ceil(kids.length / 2); const a = el.cloneNode(false), b = el.cloneNode(false); kids.slice(0, k).forEach(x => a.appendChild(x.cloneNode(true))); kids.slice(k).forEach(x => b.appendChild(x.cloneNode(true))); if (el.tagName === 'OL') b.setAttribute('start', (+(el.getAttribute('start') || 1)) + k); return [a, b]; }
-    if (el.tagName === 'IMG' || el.querySelector('img')) return null;
-    const words = (el.textContent || '').split(/(\s+)/); if (words.length < 6) return null;
-    // coupe à la plus longue suite de mots qui tient sur la page vide
-    let lo = 1, hi = words.length - 1, best = 0; const probe = el.cloneNode(false); body.appendChild(probe);
-    while (lo <= hi) { const mid = (lo + hi) >> 1; probe.textContent = words.slice(0, mid).join(''); if (over()) hi = mid - 1; else { best = mid; lo = mid + 1; } }
-    probe.remove(); if (best < 2) return null;
-    const a = el.cloneNode(false), b = el.cloneNode(false); a.textContent = words.slice(0, best).join(''); b.textContent = words.slice(best).join('').replace(/^\s+/, ''); return [a, b];
-  };
-  newPage();
-  let guard = 0;
-  while (blocks.length && guard++ < 20000) {
-    const el = blocks.shift();
-    if (el.tagName === 'HR' && el.classList.contains('pbreak')) { if (body.childNodes.length) newPage(); continue; }
-    body.appendChild(el);
-    if (!over()) continue;
-    body.removeChild(el);
-    if (!body.childNodes.length) {
-      const parts = split(el);
-      if (parts) { blocks.unshift(...parts); continue; }
-      if (el.tagName === 'IMG' || el.querySelector('img')) { const imgs = el.tagName === 'IMG' ? [el] : [...el.querySelectorAll('img')]; imgs.forEach(i => { i.style.maxHeight = (ch - 10) + 'px'; i.style.width = 'auto'; i.style.maxWidth = '100%'; }); }
-      body.appendChild(el); newPage(); continue;
-    }
-    // garder un titre avec le paragraphe qui le suit
-    const last = body.lastElementChild; const keep = [];
-    if (isHead(last) && body.children.length > 1) { body.removeChild(last); keep.push(last); }
-    newPage(); blocks.unshift(...keep, el);
-  }
-  if (pages.length > 1 && !pages[pages.length - 1].querySelector('.rdoc').childNodes.length) { pages.pop().remove(); }
-  // en-têtes, pieds, numéros de page + numéros dans le sommaire
-  const pageOf = {}; pages.forEach((p, i) => p.querySelectorAll('h1[id],h2[id],h3[id]').forEach(h => { if (!(h.id in pageOf)) pageOf[h.id] = i + 1; }));
-  pages.forEach((p, i) => {
-    p.querySelectorAll('.toc .te').forEach(te => { const pgEl = te.querySelector('.pg'); if (pgEl) pgEl.textContent = pageOf[te.dataset.target] || ''; });
-    const fs = Math.max(7, L.size - 2), mid = m / 2;
-    if (L.header) p.insertAdjacentHTML('beforeend', `<div style="position:absolute;left:${m}px;right:${m}px;top:${mid - fs * 0.7}px;font:${fs}pt ${L.font};color:#6b7280;border-bottom:1px solid #d1d5db;padding-bottom:2px;white-space:nowrap;overflow:hidden">${esc(L.header)}</div>`);
-    if (L.footer || L.pageNum) p.insertAdjacentHTML('beforeend', `<div style="position:absolute;left:${m}px;right:${m}px;bottom:${mid - fs * 0.7}px;font:${fs}pt ${L.font};color:#6b7280;display:flex;justify-content:space-between;white-space:nowrap"><span>${esc(L.footer)}</span><span>${L.pageNum ? (i + 1) + ' / ' + pages.length : ''}</span></div>`);
-  });
+  const d = ensureRules(n.data), L = d.layout, pg = pageMM(L);
+  const host = rulesHost(); host.innerHTML = `<div class="rprint">${bookSheetsHtml(d, false).map(x => x.html).join('')}</div>`;
+  const pages = [...host.querySelectorAll('.rsheet')], pageOf = {};
+  pages.forEach((p, i) => { pageOf['pg-' + p.dataset.pid] = i + 1; pageOf[p.dataset.pid] = i + 1; p.querySelectorAll('h1[id],h2[id],h3[id]').forEach(h => { if (!(h.id in pageOf)) pageOf[h.id] = i + 1; }); });
   return { pages, pg, pageOf };
 }
 async function rulesPdf(n, onProg) {
@@ -5865,7 +6160,7 @@ async function rulesPdf(n, onProg) {
   pdf.setProperties({ title: `${doc.name} — ${n.name}`, creator: 'MomoTOP' });
   for (let i = 0; i < pages.length; i++) {
     onProg && onProg(i / pages.length);
-    const p = pages[i]; const cv = await html2canvas(p, { scale: 2.2, backgroundColor: '#ffffff', logging: false, useCORS: true });
+    const p = pages[i]; const cv = await html2canvas(p, { scale: 2.2, backgroundColor: null, logging: false, useCORS: true });
     if (i) pdf.addPage([pg.w, pg.h], pg.w > pg.h ? 'landscape' : 'portrait');
     pdf.addImage(cv.toDataURL('image/jpeg', 0.9), 'JPEG', 0, 0, pg.w, pg.h, undefined, 'FAST');
     // liens cliquables : sommaire, renvois internes, pages web
@@ -5873,7 +6168,7 @@ async function rulesPdf(n, onProg) {
     const box = el => { const r = el.getBoundingClientRect(); return [(r.left - pr.left) * k, (r.top - pr.top) * k, r.width * k, r.height * k]; };
     p.querySelectorAll('.toc .te').forEach(te => { const t = pageOf[te.dataset.target]; if (t) { const [x, y, w, h] = box(te); pdf.link(x, y, w, h, { pageNumber: t }); } });
     p.querySelectorAll('a[href]').forEach(a => { const href = a.getAttribute('href'); const [x, y, w, h] = box(a);
-      if (href.startsWith('#')) { const t = pageOf[href.slice(1)]; if (t) pdf.link(x, y, w, h, { pageNumber: t }); }
+      if (href.startsWith('#')) { const t = pageOf[href.slice(1)] || pageOf[href.slice(4)]; if (t) pdf.link(x, y, w, h, { pageNumber: t }); }
       else if (/^https?:|^mailto:/i.test(href)) pdf.link(x, y, w, h, { url: href }); });
   }
   rulesHost().innerHTML = '';
@@ -6076,7 +6371,7 @@ async function generatePrint(ids, zipIt) {
   if (prog) { prog.classList.remove('hidden'); btns.forEach(b => b.disabled = true); }
   try {
     await loadLib('jspdf'); if (zipIt) await loadLib('jszip');
-    const zip = zipIt ? new JSZip() : null; let k = 0, made = 0;
+    const zip = zipIt ? new JSZip() : null, used = new Set(); let k = 0, made = 0;
     for (const id of ids) {
       const n = get(id); const label = `${TYPES[n.type].label} « ${n.name} »`;
       const onProg = f => { if (bar) bar.style.width = ((k + f) / ids.length * 100) + '%'; if (txt) txt.textContent = `Génération : ${label}…`; };
@@ -6085,7 +6380,7 @@ async function generatePrint(ids, zipIt) {
       k++;
       if (!pdf) continue;
       const fname = `${String(k).padStart(2, '0')}_${slug(TYPES[n.type].label)}_${slug(n.name)}.pdf`;
-      if (zip) zip.file(fname, pdf.output('arraybuffer')); else pdf.save(`${slug(doc.name)}_${slug(n.name)}.pdf`);
+      if (zip) zip.file(uniqueName(exportName(n.name, 'pdf'), used), pdf.output('arraybuffer')); else pdf.save(exportName(n.name, 'pdf'));
       made++;
     }
     if (bar) bar.style.width = '100%';
@@ -6093,7 +6388,7 @@ async function generatePrint(ids, zipIt) {
       if (!made) { toast('Rien à imprimer avec ces réglages.'); return; }
       if (txt) txt.textContent = 'Compression du .ZIP…';
       const blob = await zip.generateAsync({ type: 'blob', compression: 'DEFLATE', compressionOptions: { level: 6 } });
-      download(blob, `${slug(doc.name)}_impression_${stampNow()}.zip`);
+      download(blob, exportName('Impression', 'zip'));
       toast(`ZIP généré : ${made} carnet${made > 1 ? 's' : ''} PDF (${kb(blob.size)})`);
     } else toast('PDF généré');
   } catch (e) { console.error(e); infoDlg('Impression impossible', `<div>${esc(e.message || String(e))}</div><div class="note">Les bibliothèques PDF/ZIP se chargent depuis Internet à la première impression : vérifie la connexion.</div>`); }
@@ -6101,7 +6396,7 @@ async function generatePrint(ids, zipIt) {
 }
 async function exportSinglePdf(id) {
   const n = nodeById(id) || printItemById(id); toast('Génération du PDF…');
-  try { const pdf = n.type === 'rules' ? await rulesPdf(n) : n.type === 'map' ? await mapPdf(n) : await piecePdf(n); if (pdf) { pdf.save(`${slug(doc.name)}_${slug(n.name)}.pdf`); toast('PDF généré'); } }
+  try { const pdf = n.type === 'rules' ? await rulesPdf(n) : n.type === 'map' ? await mapPdf(n) : await piecePdf(n); if (pdf) { pdf.save(exportName(n.name, 'pdf')); toast('PDF généré'); } }
   catch (e) { infoDlg('PDF impossible', `<div>${esc(e.message || String(e))}</div>`); }
 }
 
@@ -6235,17 +6530,22 @@ const GUIDE = [
   { id: 'album', ic: 'album', title: 'Album', intro: 'Un album, c\'est le moodboard de ton jeu : tu y ranges les visuels qui te plaisent, et tu les réutilises dans tous les outils.',
     secs: [[null, [
       { t: 'Créer un album', why: `Palette de gauche ${B('btn-c-album')} (ou ${K('7')}). Tu peux en faire plusieurs : personnages, décors, ambiance…` },
-      { t: 'Remplir', why: 'Double-clique la bulle, puis « Ajouter des images » (plusieurs à la fois) ou glisse des fichiers dans la fenêtre. Les très grandes images sont réduites à 1600 px pour garder un .mmg léger.', dots: ['Clic sur une image : la voir en grand.', 'Sous chaque image : une légende à écrire, et la corbeille pour la retirer.'] },
+      { t: 'Remplir', why: 'Double-clique la bulle, puis « Ajouter des images » (plusieurs à la fois) ou glisse des fichiers dans la fenêtre. Les très grandes images sont réduites à 1600 px pour garder un .mmg léger.', dots: ['Clic sur une image : la voir en grand.', 'Sous chaque image : une légende (elle donne son nom au fichier), et la corbeille pour la retirer.', '« Télécharger (.zip) » : toutes les images, nommées LÉGENDE_JEU_DATE.'] },
       { t: 'Utiliser les images', why: 'Dès qu\'un album contient des images, chaque bouton d\'import d\'image ouvre d\'abord tes albums : clique une image, ou « Depuis l\'ordinateur… ».', dots: ['Cartes, jetons, plateaux : modules image et icône, fond, dos.', 'Règles : insérer une image.', 'Bannière du jeu.', `Map : le bouton ${I('album')} pose une image sur la carte.`] }]]] },
-  { id: 'rules', ic: 'rules', title: 'Règles', intro: 'Un traitement de texte pensé pour un livret de règles : titres, sommaire automatique, liens, mise en page soignée et PDF prêt à imprimer.',
-    secs: [[null, [
-      { t: 'Mise en forme', why: `Styles de paragraphe (titres 1 à 3, encadré, code), police, taille, gras, italique, couleur, surlignage ${I('brush')}, alignements, listes, retraits.`, tip: `${K('Ctrl')}+${K('Alt')}+${K('1')} / ${K('2')} / ${K('3')} pour les titres, ${K('Ctrl')}+${K('Alt')}+${K('0')} pour revenir au paragraphe.` },
-      { t: 'Le sommaire', why: 'Le volet de gauche liste les titres : un clic t\'y emmène. Le bouton sommaire de la barre insère aussi un sommaire automatique dans le livret, tenu à jour et cliquable, jusque dans le PDF avec les vrais numéros de page.' },
-      { t: `Les liens ${I('link')}`, why: `${K('Ctrl')}+${K('K')}. Trois sortes : une page web, un titre du livret (renvoi interne), ou une bulle du projet (« voir les cartes Sorts »).`, tip: `Clic sur un lien : l'ouvrir, le modifier ou le retirer. ${K('Ctrl')} + clic l'ouvre directement.` },
-      { t: 'Mise en page', why: 'Volet de droite : format (A5, A4, A3, Letter), orientation, marges, 1 ou 2 colonnes, police de base, interligne, couleurs, titres numérotés, en-tête, pied de page et numéros de page. Des pointillés montrent où tombent les pages.' },
-      { t: 'Images et tableaux', why: `Insère, colle ou glisse une image ; clique-la pour régler sa largeur et son alignement. Dans un tableau, ${K('Tab')} passe à la cellule suivante (et ajoute une ligne à la fin).` },
-      { t: `Saut de page ${K('Ctrl')}+${K('Entrée')}`, why: 'Force la suite sur une nouvelle page du PDF.' },
-      { t: `${I('pdf')} PDF de ce livret`, why: 'Produit tout de suite le PDF des règles, sans passer par le gestionnaire.' }]]] },
+  { id: 'rules', ic: 'rules', title: 'Règles', intro: 'Le livret de règles se compose de feuilles, rangées dans des chapitres comme des fichiers dans des dossiers. Chaque feuille est faite de blocs : texte, image, encadré, deux colonnes, séparateur, espace, sommaire.',
+    secs: [['Le sommaire (à gauche)', [
+      { t: 'Chapitres = dossiers', why: 'Un chapitre contient des feuilles. Clique un chapitre pour l\'ouvrir ou le fermer, double-clique pour le renommer.', dots: ['Les boutons en haut : nouveau chapitre, nouvelle feuille.', 'Glisse une feuille sur un chapitre pour l\'y ranger, entre deux feuilles pour la placer, ou tout en bas pour la sortir des chapitres.', 'Les chapitres se glissent aussi pour changer leur ordre.', 'Supprimer un chapitre garde ses feuilles.'] },
+      { t: 'Couvertures', why: 'La 1re et la 4e de couverture se cochent dans le volet de droite. Écris le titre et le sous-titre directement dessus ; une image de fond et des couleurs se choisissent à droite.' }]],
+    ['Les blocs', [
+      { t: 'Ajouter un bloc', why: 'Le petit + vert sous un bloc, « Ajouter un bloc » en bas d\'une feuille, ou le bouton Bloc de la barre.', dots: ['<b>Texte</b> : paragraphes, titres 1 à 3, listes, tableaux, liens.', '<b>Image</b> : une image (d\'un album ou de l\'ordinateur), largeur et alignement, légende.', '<b>Encadré</b> : un texte sur fond coloré.', '<b>2 colonnes</b>, <b>Séparateur</b>, <b>Espace</b>.', '<b>Sommaire</b> : la liste des chapitres et des feuilles avec leurs numéros de page.'] },
+      { t: 'Ranger les blocs', why: 'Attrape un bloc par sa poignée (à gauche) et glisse-le, même vers une autre feuille. Le volet de droite le monte, le descend, le duplique ou l\'envoie sur la feuille voisine.' },
+      { t: 'Une feuille qui déborde', why: 'Elle est entourée de rouge, avec le nombre de mm en trop : envoie un bloc sur la feuille suivante (créée si besoin).' },
+      { t: 'Mise en forme', why: `Styles de paragraphe, police, taille, gras, italique, couleur, surlignage, alignements, listes. ${K('Ctrl')}+${K('Alt')}+${K('1')}/${K('2')}/${K('3')} : titres. ${K('Ctrl')}+${K('K')} : lien vers une page web, un titre, une feuille ou une bulle. ${K('Ctrl')}+${K('Entrée')} : nouvelle feuille.` }]],
+    ['La page', [
+      { t: 'Mise en page', why: 'Format (A5, A4, A3, Letter), orientation, marges, couleur de fond des feuilles.' },
+      { t: 'Filigrane', why: 'Une image discrète derrière le texte de chaque feuille : importe-la, puis règle son opacité et sa taille.' },
+      { t: 'Texte de base, en-tête, pied', why: 'Police, taille, interligne, couleurs, numérotation des titres ; en-tête, pied de page et numéros de page.' },
+      { t: `${I('pdf')} PDF du livret`, why: 'Les couvertures et toutes les feuilles, dans l\'ordre du sommaire ; le sommaire et les liens internes restent cliquables.' }]]] },
   { id: 'print', ic: 'print', title: 'Impression', intro: 'Le gestionnaire d\'impression produit, en un clic, des carnets PDF rangés dans un seul .ZIP : un par livret de règles, un par paquet, et un par type pour les pièces hors paquet.',
     secs: [[null, [
       { t: `Ouvrir le gestionnaire ${B('btn-print')}`, why: `Ou ${K('Ctrl')}+${K('P')}. À gauche, coche ce qu'il faut imprimer : un type entier (toutes les cartes…) ou bulle par bulle. Clique une bulle pour régler son format et voir l'aperçu.` },
@@ -6680,7 +6980,9 @@ function agRun(n, a) {
     case 'ecrire_regles': {
       const b = need(a.bulle, ['rules']); const html = mdToHtml(a.contenu);
       if (cur.view === 'rules' && cur.nodeId === b.id) rulesSync();
-      b.data.html = String(a.mode || '').toLowerCase().startsWith('aj') ? (b.data.html || '') + html : html; agAfter(); return { ok: true, mots: rulesWordCount(b.data.html) };
+      const book = bookFromHtml(html);
+      if (String(a.mode || '').toLowerCase().startsWith('aj')) b.data.book.push(...book); else b.data.book = book;
+      b.data.html = rulesHtmlOf(b.data); agAfter(); return { ok: true, mots: rulesWordCount(b.data.html) };
     }
     case 'creer_pieces': {
       const t = TYPE_FR[String(a.type || '').toLowerCase()] || (TYPES[a.type] && TYPES[a.type].piece ? a.type : null); if (!t || !TYPES[t].piece) throw new Error('type de pièce inconnu : ' + a.type);
@@ -6848,7 +7150,7 @@ window.addEventListener('keydown', e => {
   if (e.key === 'Escape') { e.preventDefault(); showHub(); }
 });
 /* Échap dans l'éditeur de règles : sortir du texte puis revenir au hub */
-rDoc.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); closeLinkPop(); rDoc.blur(); } });
+rDoc.addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); closeLinkPop(); if (document.activeElement && document.activeElement.blur) document.activeElement.blur(); } });
 $('#ivText').addEventListener('keydown', e => { if (e.key === 'Escape') { e.preventDefault(); e.target.blur(); } });
 
 /* glisser-déposer de fichiers */
