@@ -561,7 +561,7 @@ body.dragging-card,body.dragging-card .pile-card{cursor:grabbing}
 .bigbtn.danger:hover{background:#4c1d24}
 .panel .ph{gap:6px;justify-content:flex-start}
 .panel .ph .ic-svg{color:var(--g500)}
-.bubcard .pb,.gamecard .pb{padding-top:12px;gap:10px}
+.bubcard .pb{padding-top:12px;gap:10px}.gamecard .pb{gap:10px}
 .bh,.gh{display:flex;align-items:center;gap:11px}
 .bico{width:48px;height:48px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--bc);background:color-mix(in srgb,var(--bc) 22%,transparent);border:2px solid var(--bc);flex:none}
 .bhx,.ghx{flex:1;min-width:0}
@@ -732,6 +732,31 @@ body.dragging-card,body.dragging-card .pile-card{cursor:grabbing}
 a.dbtn{color:var(--g200)}
 a.dbtn:hover{color:#fff}
 .ia-prov{width:max-content}
+/* ---- chapitres repliables du volet de droite ---- */
+.panel.fold>.fh{width:100%;background:none;border:0;cursor:pointer;justify-content:flex-start;gap:8px;padding:11px 12px;color:var(--g300);font-size:11.5px}
+.panel.fold>.fh:hover{background:var(--g850);color:#fff}
+.panel.fold>.fh .ic-svg{color:var(--brand3);flex:none}
+.fold .fnum{display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:var(--brand);color:#fff;font-size:10.5px;flex:none}
+.fold .ftt{flex:1;text-align:left}
+.fold .fcnt{font-weight:600;color:var(--g400);text-transform:none;letter-spacing:0;font-size:11.5px}
+.fold .fchev{width:15px;height:15px;color:var(--g400);flex:none;transition:transform .18s}
+.fold.closed .fchev{transform:rotate(-90deg)}
+.fold.closed>.pb{display:none}
+.plist .it.off{opacity:.45}
+.plist .it .eyeb{opacity:.55}.plist .it .eyeb:hover{opacity:1;color:var(--g200)}
+.plist .it.off .eyeb{opacity:1;color:var(--amber)}
+/* ---- bouton Filtre ---- */
+.hbtn.filtering{border-color:var(--amber);color:var(--amber)}
+.fbadge{min-width:18px;height:18px;border-radius:9px;background:var(--amber);color:#111827;font-size:11px;font-weight:800;display:inline-flex;align-items:center;justify-content:center;padding:0 5px}
+.menu.fmenu{min-width:270px;max-width:320px}
+.fmenu button{justify-content:flex-start;gap:9px}
+.fmenu .fcb{width:17px;height:17px;border-radius:4px;border:1.5px solid var(--g500);display:inline-flex;align-items:center;justify-content:center;flex:none;color:#fff}
+.fmenu .fcb.on,.fmenu .fcb.part{background:var(--brand2);border-color:var(--brand2)}
+.fmenu .fcount{margin-left:auto;font-size:11px;color:var(--g400)}
+.fmenu .flist{max-height:min(320px,50vh);overflow-y:auto}
+.fmenu .fnm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.fmenu .frow{display:flex;gap:4px}.fmenu .frow button{justify-content:center;gap:6px;font-size:12.5px}
+.fmenu .fnote{padding:6px 10px 8px;color:var(--g400);font-size:12.5px}
 
 </style>
 </head>
@@ -763,7 +788,7 @@ a.dbtn:hover{color:#fff}
 @keyframes mgs-T{0%{opacity:1;transform:translate(36.72%,98.23%) rotate(0.0deg) scale(1);filter:none}25.893%{opacity:1;transform:translate(36.72%,98.23%) rotate(0.0deg) scale(1);filter:none;animation-timing-function:cubic-bezier(.2,.8,.3,1)}33.036%{opacity:1;transform:translate(36.72%,65.81%) rotate(0.0deg) scale(1);filter:none;animation-timing-function:ease-in-out}35.179%{opacity:1;transform:translate(36.72%,67.58%) rotate(0.0deg) scale(1);filter:none}70.536%{opacity:1;transform:translate(36.72%,67.58%) rotate(0.0deg) scale(1);filter:none;animation-timing-function:ease-out}72.321%{opacity:1;transform:translate(36.72%,69.03%) rotate(0.0deg) scale(1);filter:none;animation-timing-function:cubic-bezier(.2,.8,.3,1)}76.429%{opacity:1;transform:translate(17.97%,-12.10%) rotate(-14.0deg) scale(1);filter:none;animation-timing-function:cubic-bezier(.5,0,.8,.4)}80.000%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none;animation-timing-function:ease-out}81.429%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:brightness(1.8)}84.821%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}100%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}}
 @keyframes mgs-P{0%{opacity:0;transform:translate(-40.62%,0.00%) rotate(0.0deg) scale(1);filter:none}33.036%{opacity:0;transform:translate(-40.62%,0.00%) rotate(0.0deg) scale(1);filter:none}33.929%{opacity:1;transform:translate(-40.62%,0.00%) rotate(0.0deg) scale(1);filter:none;animation-timing-function:ease-out}36.250%{opacity:1;transform:translate(-31.25%,-2.74%) rotate(3.0deg) scale(1);filter:none;animation-timing-function:ease-in}38.571%{opacity:1;transform:translate(-20.31%,0.00%) rotate(-2.0deg) scale(1);filter:none;animation-timing-function:ease-out}40.893%{opacity:1;transform:translate(-10.16%,-2.26%) rotate(2.0deg) scale(1);filter:none;animation-timing-function:ease-in}43.214%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}44.643%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none;animation-timing-function:ease-in-out}47.500%{opacity:1;transform:translate(0.00%,0.00%) rotate(-9.0deg) scale(1);filter:none;animation-timing-function:cubic-bezier(.5,0,.8,.4)}49.286%{opacity:1;transform:translate(0.00%,0.00%) rotate(7.0deg) scale(1);filter:none;animation-timing-function:ease-out}53.571%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}71.429%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}72.500%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:brightness(1.8)}75.893%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}100%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}}
 @keyframes mgs-O{0%{opacity:0;transform:translate(-42.97%,3.39%) rotate(-10.0deg) scale(1);filter:none}33.571%{opacity:0;transform:translate(-42.97%,3.39%) rotate(-10.0deg) scale(1);filter:none}34.821%{opacity:1;transform:translate(-42.97%,3.39%) rotate(-10.0deg) scale(1);filter:none;animation-timing-function:ease-out}37.143%{opacity:1;transform:translate(-33.59%,0.65%) rotate(-6.0deg) scale(1);filter:none;animation-timing-function:ease-in}39.464%{opacity:1;transform:translate(-22.66%,3.39%) rotate(-12.0deg) scale(1);filter:none;animation-timing-function:ease-out}41.786%{opacity:1;transform:translate(-12.50%,1.13%) rotate(-6.0deg) scale(1);filter:none;animation-timing-function:ease-in}44.107%{opacity:1;transform:translate(-2.34%,3.39%) rotate(-10.0deg) scale(1);filter:none}44.643%{opacity:1;transform:translate(-2.34%,3.39%) rotate(-10.0deg) scale(1);filter:none;animation-timing-function:ease-in-out}47.500%{opacity:1;transform:translate(-6.25%,3.39%) rotate(-18.0deg) scale(1);filter:none;animation-timing-function:cubic-bezier(.5,0,.8,.4)}49.286%{opacity:1;transform:translate(0.78%,3.39%) rotate(4.0deg) scale(1);filter:none;animation-timing-function:ease-out}54.464%{opacity:1;transform:translate(-1.56%,3.39%) rotate(10.0deg) scale(1);filter:none;animation-timing-function:ease-in-out}62.500%{opacity:1;transform:translate(-0.78%,3.39%) rotate(16.0deg) scale(1);filter:none;animation-timing-function:ease-in-out}69.286%{opacity:1;transform:translate(-2.34%,3.39%) rotate(4.0deg) scale(1);filter:none;animation-timing-function:ease-out}71.786%{opacity:1;transform:translate(-1.17%,-7.26%) rotate(0.0deg) scale(1);filter:none;animation-timing-function:ease-in}74.643%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}75.357%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:brightness(1.8)}78.571%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}100%{opacity:1;transform:translate(0.00%,0.00%) rotate(0.0deg) scale(1);filter:none}}
-@keyframes mgs-D{0%{opacity:0;transform:translate(46.88%,25.00%) rotate(-20.0deg) scale(0.5);filter:none}46.429%{opacity:0;transform:translate(46.88%,25.00%) rotate(-20.0deg) scale(0.5);filter:none}47.857%{opacity:1;transform:translate(46.88%,25.00%) rotate(-20.0deg) scale(1.35);filter:none}48.869%{opacity:1;transform:translate(50.00%,11.46%) rotate(33.3deg) scale(1.35);filter:none}49.881%{opacity:1;transform:translate(53.12%,2.57%) rotate(86.7deg) scale(1.35);filter:none}50.893%{opacity:1;transform:translate(56.25%,-1.65%) rotate(140.0deg) scale(1.35);filter:none}51.905%{opacity:1;transform:translate(59.38%,-1.22%) rotate(193.3deg) scale(1.35);filter:none}52.917%{opacity:1;transform:translate(62.50%,3.88%) rotate(246.7deg) scale(1.35);filter:none}53.929%{opacity:1;transform:translate(65.62%,13.63%) rotate(300.0deg) scale(1.35);filter:none}54.911%{opacity:1;transform:translate(68.55%,6.37%) rotate(342.5deg) scale(1.35);filter:none}55.893%{opacity:1;transform:translate(71.48%,3.95%) rotate(385.0deg) scale(1.35);filter:none}56.875%{opacity:1;transform:translate(74.41%,6.37%) rotate(427.5deg) scale(1.35);filter:none}57.857%{opacity:1;transform:translate(77.34%,13.63%) rotate(470.0deg) scale(1.35);filter:none}58.571%{opacity:1;transform:translate(79.17%,10.76%) rotate(500.0deg) scale(1.35);filter:none}59.286%{opacity:1;transform:translate(80.99%,10.76%) rotate(530.0deg) scale(1.35);filter:none}60.000%{opacity:1;transform:translate(82.81%,13.63%) rotate(560.0deg) scale(1.35);filter:none}63.393%{opacity:1;transform:translate(89.84%,13.63%) rotate(650.0deg) scale(1.35);filter:none;animation-timing-function:cubic-bezier(.5,0,.8,.4)}65.179%{opacity:1;transform:translate(143.12%,48.32%) rotate(820.0deg) scale(1.35);filter:none}66.964%{opacity:1;transform:translate(196.41%,77.85%) rotate(990.0deg) scale(1.35);filter:none}68.750%{opacity:1;transform:translate(249.69%,102.23%) rotate(1160.0deg) scale(1.35);filter:none}70.536%{opacity:1;transform:translate(302.97%,121.44%) rotate(1330.0deg) scale(1.35);filter:none}72.321%{opacity:1;transform:translate(356.25%,135.48%) rotate(1500.0deg) scale(1.35);filter:none}72.500%{opacity:0;transform:translate(356.25%,135.48%) rotate(1500.0deg) scale(1.35);filter:none}100%{opacity:0;transform:translate(356.25%,135.48%) rotate(1500.0deg) scale(1.35);filter:none}}
+@keyframes mgs-D{0%{opacity:0;transform:translate(46.88%,25.00%) rotate(-20.0deg) scale(0.5);filter:none}46.429%{opacity:0;transform:translate(46.88%,25.00%) rotate(-20.0deg) scale(0.5);filter:none}47.857%{opacity:1;transform:translate(46.88%,25.00%) rotate(-20.0deg) scale(1.35);filter:none}48.869%{opacity:1;transform:translate(50.00%,11.46%) rotate(33.3deg) scale(1.35);filter:none}49.881%{opacity:1;transform:translate(53.12%,2.57%) rotate(86.7deg) scale(1.35);filter:none}50.893%{opacity:1;transform:translate(56.25%,-1.65%) rotate(140.0deg) scale(1.35);filter:none}51.905%{opacity:1;transform:translate(59.38%,-1.22%) rotate(193.3deg) scale(1.35);filter:none}52.917%{opacity:1;transform:translate(62.50%,3.88%) rotate(246.7deg) scale(1.35);filter:none}53.929%{opacity:1;transform:translate(65.62%,13.63%) rotate(300.0deg) scale(1.35);filter:none}54.911%{opacity:1;transform:translate(68.55%,6.37%) rotate(342.5deg) scale(1.35);filter:none}55.893%{opacity:1;transform:translate(71.48%,3.95%) rotate(385.0deg) scale(1.35);filter:none}56.875%{opacity:1;transform:translate(74.41%,6.37%) rotate(427.5deg) scale(1.35);filter:none}57.857%{opacity:1;transform:translate(77.34%,13.63%) rotate(470.0deg) scale(1.35);filter:none}58.571%{opacity:1;transform:translate(79.17%,10.76%) rotate(500.0deg) scale(1.35);filter:none}59.286%{opacity:1;transform:translate(80.99%,10.76%) rotate(530.0deg) scale(1.35);filter:none}60.000%{opacity:1;transform:translate(82.81%,13.63%) rotate(560.0deg) scale(1.35);filter:none}62.500%{opacity:1;transform:translate(89.84%,13.63%) rotate(650.0deg) scale(1.35);filter:none}63.286%{opacity:1;transform:translate(92.97%,17.10%) rotate(686.0deg) scale(1.35);filter:none}64.071%{opacity:1;transform:translate(96.09%,21.60%) rotate(722.0deg) scale(1.35);filter:none}64.857%{opacity:1;transform:translate(99.22%,27.13%) rotate(758.0deg) scale(1.35);filter:none}65.643%{opacity:1;transform:translate(102.34%,33.69%) rotate(794.0deg) scale(1.35);filter:none}66.429%{opacity:1;transform:translate(105.47%,41.29%) rotate(830.0deg) scale(1.35);filter:none}67.202%{opacity:1;transform:translate(109.90%,32.78%) rotate(873.3deg) scale(1.35);filter:none}67.976%{opacity:1;transform:translate(114.32%,27.67%) rotate(916.7deg) scale(1.35);filter:none}68.750%{opacity:1;transform:translate(118.75%,25.97%) rotate(960.0deg) scale(1.35);filter:none}69.524%{opacity:1;transform:translate(123.18%,27.67%) rotate(1003.3deg) scale(1.35);filter:none}70.298%{opacity:1;transform:translate(127.60%,32.78%) rotate(1046.7deg) scale(1.35);filter:none}71.071%{opacity:1;transform:translate(132.03%,41.29%) rotate(1090.0deg) scale(1.35);filter:none}71.750%{opacity:1;transform:translate(136.25%,35.87%) rotate(1130.0deg) scale(1.35);filter:none}72.429%{opacity:1;transform:translate(140.47%,33.16%) rotate(1170.0deg) scale(1.35);filter:none}73.107%{opacity:1;transform:translate(144.69%,33.16%) rotate(1210.0deg) scale(1.35);filter:none}73.786%{opacity:1;transform:translate(148.91%,35.87%) rotate(1250.0deg) scale(1.35);filter:none}74.464%{opacity:1;transform:translate(153.12%,41.29%) rotate(1290.0deg) scale(1.35);filter:none}75.089%{opacity:1;transform:translate(157.23%,38.27%) rotate(1327.5deg) scale(1.35);filter:none}75.714%{opacity:1;transform:translate(161.33%,37.26%) rotate(1365.0deg) scale(1.35);filter:none}76.339%{opacity:1;transform:translate(165.43%,38.27%) rotate(1402.5deg) scale(1.35);filter:none}76.964%{opacity:1;transform:translate(169.53%,41.29%) rotate(1440.0deg) scale(1.35);filter:none}77.560%{opacity:1;transform:translate(173.44%,40.00%) rotate(1476.7deg) scale(1.35);filter:none}78.155%{opacity:1;transform:translate(177.34%,40.00%) rotate(1513.3deg) scale(1.35);filter:none}78.750%{opacity:1;transform:translate(181.25%,41.29%) rotate(1550.0deg) scale(1.35);filter:none}91.964%{opacity:1;transform:translate(543.75%,41.29%) rotate(4300.0deg) scale(1.35);filter:none;animation-timing-function:linear}100%{opacity:1;transform:translate(543.75%,41.29%) rotate(4300.0deg) scale(1.35);filter:none}}
 @media (prefers-reduced-motion:reduce){#mg-splash{display:none}}
 </style>
 <div id="mg-splash" aria-hidden="true"><div class="mgs-box">
@@ -796,17 +821,9 @@ setTimeout(done,6200);
   </div>
 
   <div class="hgroup">
-    <button class="hbtn" id="btn-new" title="Nouveau jeu (Ctrl+Alt+N)" data-act="new"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg><span class="lbl">Nouveau</span></button>
-    <button class="hbtn" title="Revenir à la carte mentale (Échap)" data-act="hub" id="btn-hub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="4.5" cy="5" r="2"/><circle cx="19.5" cy="5" r="2"/><circle cx="4.5" cy="19" r="2"/><circle cx="19.5" cy="19" r="2"/><path d="m6 6.4 3.8 3.6M18 6.4l-3.8 3.6M6 17.6l3.8-3.6M18 17.6l-3.8-3.6"/></svg><span class="lbl">Carte mentale</span></button>
-    <div class="dd"><button class="hbtn" id="btn-bubble" data-menu="m-bubble" title="Créer une bulle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="10" r="6"/><circle cx="18" cy="17" r="3.5"/><path d="M9 7.5v5M6.5 10h5"/></svg><span class="lbl">Bulle</span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg></button>
-      <div class="menu hidden" id="m-bubble">
-        <div class="mlabel">Nouvelle bulle (liée à la bulle sélectionnée)</div>
-        <button data-act="create:rules"><span class="mi c-rules"><i data-ico="rules"></i>Règles</span><kbd>1</kbd></button>
-        <button data-act="create:cards"><span class="mi c-cards"><i data-ico="cards"></i>Cartes</span><kbd>2</kbd></button>
-        <button data-act="create:tokens"><span class="mi c-tokens"><i data-ico="tokens"></i>Jetons</span><kbd>3</kbd></button>
-        <button data-act="create:boards"><span class="mi c-boards"><i data-ico="boards"></i>Plateaux</span><kbd>4</kbd></button>
-        <button data-act="create:idea"><span class="mi c-idea"><i data-ico="idea"></i>Idée (note libre)</span><kbd>5</kbd></button>
-      </div>
+    <button class="hbtn" title="Retour à la carte mentale (Échap)" data-act="hub" id="btn-hub"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><circle cx="4.5" cy="5" r="2"/><circle cx="19.5" cy="5" r="2"/><circle cx="4.5" cy="19" r="2"/><circle cx="19.5" cy="19" r="2"/><path d="m6 6.4 3.8 3.6M18 6.4l-3.8 3.6M6 17.6l3.8-3.6M18 17.6l-3.8-3.6"/></svg><span class="lbl">Retour à la carte</span></button>
+    <div class="dd"><button class="hbtn" id="btn-filter" data-menu="m-filter" title="Filtre : décoche des bulles pour les griser sur la carte"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h18l-7 8.5V19l-4 2v-7.5z"/></svg><span class="lbl">Filtre</span><span class="fbadge hidden" id="filter-badge"></span><svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m6 9 6 6 6-6"/></svg></button>
+      <div class="menu hidden fmenu" id="m-filter"></div>
     </div>
   </div>
   <span class="doc-name" id="docname"></span>
@@ -820,6 +837,8 @@ setTimeout(done,6200);
     <div class="dd">
       <button class="hbtn ico" id="btn-file" data-menu="m-file" title="Fichier : ouvrir (.mmg ou .cf), enregistrer, enregistrer sous, sauvegardes automatiques"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8M7 3v5h8"/></svg></button>
       <div class="menu right hidden" id="m-file">
+        <button data-act="new" id="btn-new" title="Repart d'un jeu vierge (le jeu actuel te sera proposé à l'enregistrement)"><span class="mi"><i data-ico="plus" data-size="15"></i>Nouveau jeu</span><kbd>Ctrl+Alt+N</kbd></button>
+        <hr>
         <button data-act="open" title="Ouvre un projet .mmg, ou un .cf de Card Forge (il devient une bulle Cartes du projet ouvert)"><span class="mi"><i data-ico="folder" data-size="15"></i>Ouvrir…</span><kbd>Ctrl+O</kbd></button>
         <button data-act="save"><span class="mi"><i data-ico="save" data-size="15"></i>Enregistrer</span><kbd>Ctrl+S</kbd></button>
         <button data-act="saveas"><span class="mi"><i data-ico="saveAs" data-size="15"></i>Enregistrer sous…</span><kbd>Ctrl+Maj+S</kbd></button>
@@ -1247,7 +1266,7 @@ const infoDlg = (title, body) => dialog({ title, body, cancel: null, ok: 'Fermer
 function closeMenus() { $$('.menu').forEach(m => m.classList.add('hidden')); }
 document.addEventListener('click', e => {
   const mb = e.target.closest('[data-menu]');
-  if (mb) { const m = $('#' + mb.dataset.menu), was = m.classList.contains('hidden'); closeMenus(); if (was) m.classList.remove('hidden'); e.stopPropagation(); return; }
+  if (mb) { const m = $('#' + mb.dataset.menu), was = m.classList.contains('hidden'); closeMenus(); if (was) { if (m.id === 'm-filter') renderFilterMenu(); m.classList.remove('hidden'); } e.stopPropagation(); return; }
   if (!e.target.closest('.menu')) closeMenus();
 });
 
@@ -1446,7 +1465,8 @@ function setView(v, nodeId) {
   $('#pieceView').classList.toggle('hidden', v !== 'piece');
   $('#rulesView').classList.toggle('hidden', v !== 'rules');
   $('#ideaView').classList.toggle('hidden', v !== 'idea');
-  $('#btn-hub').classList.toggle('on', v === 'hub');
+  $('#btn-hub').disabled = v === 'hub';
+  if (typeof filterBadge === 'function') filterBadge();
   $('#st-zoomwrap').classList.toggle('hidden', v !== 'hub');
   $('#st-extra').textContent = '';
   closeCtx();
@@ -2975,7 +2995,7 @@ const drawHub = rafOnce(() => {
     c.beginPath(); c.moveTo(a.x, a.y); c.bezierCurveTo(k[0], k[1], k[2], k[3], b.x, b.y);
     c.setLineDash(isHov && hubTool === 'cut' ? [8, 6] : []);
     c.strokeStyle = isSel ? '#fcd34d' : (isHov ? (hubTool === 'cut' ? '#f87171' : '#8193b0') : '#5b6b84');
-    c.lineWidth = Math.max(isSel ? 4 : 3, 1.6 / z); c.stroke();
+    c.lineWidth = Math.max(isSel ? 4 : 3, 1.6 / z); c.globalAlpha = (isOff(a.id) || isOff(b.id)) && !isSel ? 0.22 : 1; c.stroke(); c.globalAlpha = 1;
   });
   c.setLineDash([]);
   if (hd && hd.mode === 'connect' && hd.to) {
@@ -3028,7 +3048,10 @@ function drawBubble(n) {
   const isSel = sel.has(n.id), isHov = hoverId === n.id, isDrop = hd && hd.mode === 'connect' && hd.dropId === n.id;
   if (isSel) { rr(c, x - 5, y - 5, g.w + 10, g.h + 10, (g.h + 10) / 2); c.strokeStyle = '#fcd34d'; c.lineWidth = 3; c.stroke(); }
   if (isDrop) { rr(c, x - 6, y - 6, g.w + 12, g.h + 12, (g.h + 12) / 2); c.setLineDash([6, 5]); c.strokeStyle = '#4ade80'; c.lineWidth = 3; c.stroke(); c.setLineDash([]); }
+  const off = isOff(n.id) && !isSel;
+  if (off) { c.save(); c.globalAlpha = 0.28; c.filter = 'grayscale(1)'; }
   c.drawImage(bubbleSprite(n, g), x - 3, y - 3, g.w + 6, g.h + 6);
+  if (off) c.restore();
   if (isHov) { rr(c, x + 1, y + 1, g.w - 2, g.h - 2, g.h / 2); c.fillStyle = 'rgba(255,255,255,.06)'; c.fill(); }
   if (isSel && sel.size === 1 && !hd) drawPlus(c, x + g.w + 2, n.y);
 }
@@ -3088,7 +3111,7 @@ function hitLink(p) {
 }
 
 /* ---------- rendu global (canvas + panneau) ---------- */
-function renderHub() { if (!doc) return; drawHub(); renderHubPanel(); updateTitle(); }
+function renderHub() { if (!doc) return; drawHub(); renderHubPanel(); updateTitle(); filterBadge(); }
 function refreshSel() { drawHub(); renderHubPanel(); }
 function selectOnly(ids) { sel = new Set(ids); selLink = null; }
 
@@ -3189,7 +3212,7 @@ const GAME_EMOJIS = ['🎲','🃏','♟️','🎴','🀄','🎯','🏆','👑','
 const BG_SW = ['#ffffff', '#111827', '#f4ecd8', '#fde68a', '#bbf7d0', '#bfdbfe', '#fbcfe8', '#e9d5ff'];
 let emoOpen = false;
 const typeTile = (t, extra) => `<button class="ttile" data-new="${t}" style="--bc:${TYPES[t].color}" title="Ajouter une bulle ${TYPES[t].label}${extra || ''}">${ico(TYPES[t].ic, 22)}<span>${TYPES[t].label}</span></button>`;
-const nodeRow = (n, extra) => `<div class="it" data-go="${n.id}" title="Clic : sélectionner · double-clic : ouvrir"><span class="rico" style="color:${nodeColor(n)}">${ico(TYPES[n.type].ic, 16)}</span><span class="nm">${esc(n.name)}</span>${extra || ''}</div>`;
+const nodeRow = (n, extra) => `<div class="it${isOff(n.id) ? ' off' : ''}" data-go="${n.id}" title="Clic : sélectionner · double-clic : ouvrir"><span class="rico" style="color:${nodeColor(n)}">${ico(TYPES[n.type].ic, 16)}</span><span class="nm">${esc(n.name)}</span>${extra || ''}</div>`;
 const swatches = (id, list, cur) => `<div class="swatches" id="${id}">${list.map(c => `<button style="background:${c}" data-c="${c}" class="${cur === c ? 'on' : ''}" title="${c}"></button>`).join('')}</div>`;
 function statChips(n) {
   const T = TYPES[n.type], ch = [];
@@ -3198,8 +3221,44 @@ function statChips(n) {
   else if (n.type === 'idea') ch.push(['mText', plural((n.data.text || '').trim() ? (n.data.text || '').trim().split(/\s+/).length : 0, 'mot', 'mots')]);
   return `<div class="chips">${ch.map(c => `<span class="chip">${ico(c[0], 13)}${esc(c[1])}</span>`).join('')}</div>`;
 }
+/* ---------- filtre de la carte : les bulles décochées sont grisées ---------- */
+function isOff(id) { return !!(doc && doc.filterOff && doc.filterOff.length && doc.filterOff.includes(id)); }
+function setOff(ids, off) {
+  const set = new Set((doc.filterOff || []).filter(id => nodeById(id)));
+  ids.forEach(id => { const n = nodeById(id); if (!n || n.type === 'root') return; off ? set.add(id) : set.delete(id); });
+  doc.filterOff = [...set]; filterBadge(); drawHub();
+  // re-rendu différé : le clic doit d'abord finir (sinon le menu croit qu'on a cliqué dehors et se ferme)
+  setTimeout(() => { if (!$('#m-filter').classList.contains('hidden')) renderFilterMenu(); if (cur.view === 'hub') renderHubPanel(); }, 0);
+}
+function filterBadge() {
+  const k = doc && doc.filterOff ? doc.filterOff.filter(id => nodeById(id)).length : 0, b = $('#filter-badge'), btn = $('#btn-filter');
+  if (b) { b.textContent = k; b.classList.toggle('hidden', !k); } if (btn) btn.classList.toggle('filtering', !!k);
+}
+function renderFilterMenu() {
+  const M = $('#m-filter'); if (!M || !doc) return;
+  const nodes = doc.nodes.filter(n => n.type !== 'root'), types = ['rules', 'cards', 'tokens', 'boards', 'idea'].filter(t => nodes.some(n => n.type === t));
+  const box = (on, part) => `<span class="fcb ${on ? 'on' : ''} ${part ? 'part' : ''}">${on ? ico('check', 12) : part ? ico('minus', 12) : ''}</span>`;
+  M.innerHTML = !nodes.length ? '<div class="mlabel">Filtre</div><div class="fnote">Aucune bulle à filtrer pour l\'instant.</div>'
+    : `<div class="mlabel">Types de bulles</div>${types.map(t => { const all = nodes.filter(n => n.type === t), off = all.filter(n => isOff(n.id)).length;
+        return `<button type="button" data-ft="${t}">${box(!off, off && off < all.length)}<span class="mi c-${t}">${ico(TYPES[t].ic, 16)}${TYPES[t].label}</span><span class="fcount">${all.length - off}/${all.length}</span></button>`; }).join('')}
+      <hr><div class="mlabel">Bulles</div><div class="flist">${nodes.map(n => `<button type="button" data-fn="${n.id}">${box(!isOff(n.id))}<span class="mi" style="color:${nodeColor(n)}">${ico(TYPES[n.type].ic, 15)}</span><span class="fnm">${esc(n.name)}</span></button>`).join('')}</div>
+      <hr><div class="frow"><button type="button" data-fall="1">${ico('eye', 15)}Tout cocher</button><button type="button" data-finv="1">${ico('reset', 15)}Inverser</button></div>`;
+  M.querySelectorAll('[data-ft]').forEach(b => b.onclick = () => { const ids = nodes.filter(n => n.type === b.dataset.ft).map(n => n.id); setOff(ids, !ids.some(id => isOff(id))); });
+  M.querySelectorAll('[data-fn]').forEach(b => b.onclick = () => setOff([b.dataset.fn], !isOff(b.dataset.fn)));
+  const fa = M.querySelector('[data-fall]'); if (fa) fa.onclick = () => setOff(nodes.map(n => n.id), false);
+  const fi = M.querySelector('[data-finv]'); if (fi) fi.onclick = () => { const on = nodes.filter(n => !isOff(n.id)).map(n => n.id), off = nodes.filter(n => isOff(n.id)).map(n => n.id); setOff(on, true); setOff(off, false); };
+}
+/* ---------- chapitres repliables du volet de droite ---------- */
+let foldState = {}; try { foldState = JSON.parse(localStorage.getItem('momogame-fold') || '{}'); } catch (e) {}
+function fold(id, num, title, icon, body, extra) {
+  return `<div class="panel fold${foldState[id] ? ' closed' : ''}" data-fold="${id}"><button type="button" class="ph fh" title="Replier / déplier">${ico(icon, 15)}<span class="fnum">${num}</span><span class="ftt">${title}</span>${extra || ''}<svg class="fchev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></button><div class="pb">${body}</div></div>`;
+}
+function wireFolds(P) {
+  P.querySelectorAll('[data-fold] > .fh').forEach(h => h.onclick = () => { const f = h.parentNode, id = f.dataset.fold; f.classList.toggle('closed'); foldState[id] = f.classList.contains('closed'); try { localStorage.setItem('momogame-fold', JSON.stringify(foldState)); } catch (e) {} });
+}
 function wireGo(P) {
-  P.querySelectorAll('[data-go]').forEach(b => { b.onclick = e => { if (e.target.closest('[data-unlink]')) return; selectOnly([b.dataset.go]); refreshSel(); centerOn(nodeById(b.dataset.go)); }; b.ondblclick = () => openNode(b.dataset.go); });
+  P.querySelectorAll('[data-eye]').forEach(b => b.onclick = e => { e.stopPropagation(); setOff([b.dataset.eye], !isOff(b.dataset.eye)); });
+  P.querySelectorAll('[data-go]').forEach(b => { b.onclick = e => { if (e.target.closest('[data-unlink],[data-eye]')) return; selectOnly([b.dataset.go]); refreshSel(); centerOn(nodeById(b.dataset.go)); }; b.ondblclick = () => openNode(b.dataset.go); });
   P.querySelectorAll('[data-new]').forEach(b => b.onclick = () => createBubble(b.dataset.new));
   P.querySelectorAll('[data-unlink]').forEach(b => b.onclick = e => { e.stopPropagation(); removeLink(b.dataset.unlink); touch(); renderHub(); });
 }
@@ -3238,8 +3297,7 @@ function renderHubPanel() {
         ${printable ? `<button class="tile" id="hp-unall" title="Retirer tous ses liens" style="grid-column:span 2">${ico('unlink', 20)}<span>Délier tout</span></button>` : ''}
       </div>
     </div></div>
-    <div class="panel"><div class="ph">${ico('link', 14)} Liée à (${nb.length})</div><div class="pb"><div class="plist">${nb.map(x => nodeRow(x.o, `<button class="x" data-unlink="${x.l.id}" title="Délier">${ico('unlink', 14)}</button>`)).join('') || '<div class="note">Aucun lien. Glisse le <b>+</b> vert de la bulle vers une autre, ou clique « Lier à… ».</div>'}</div></div></div>
-    <div class="panel"><div class="ph">${ico('plus', 14)} Ajouter une bulle liée</div><div class="pb"><div class="tilegrid t5">${['rules', 'cards', 'tokens', 'boards', 'idea'].map(t => typeTile(t, ' liée à celle-ci')).join('')}</div></div></div>`;
+    <div class="panel"><div class="ph">${ico('link', 14)} Liée à (${nb.length})</div><div class="pb"><div class="plist">${nb.map(x => nodeRow(x.o, `<button class="x" data-unlink="${x.l.id}" title="Délier">${ico('unlink', 14)}</button>`)).join('') || '<div class="note">Aucun lien. Glisse le <b>+</b> vert de la bulle vers une autre, ou clique « Lier à… ».</div>'}</div></div></div>`;
   $('#hp-name').oninput = e => { n.name = e.target.value || ' '; touch(true); drawHub(); updateTitle(); };
   $('#hp-name').onchange = () => touch();
   $$('#hp-col button').forEach(b => b.onclick = () => { n.color = b.dataset.c === T.color ? undefined : b.dataset.c; touch(); renderHub(); });
@@ -3256,8 +3314,7 @@ function renderGamePanel(P, isSel) {
   const r = rootNode(), ic = r.icon || {}, kind = ic.type || 'logo', s = gameSummary();
   const others = doc.nodes.filter(n => n.type !== 'root');
   const nb = isSel ? doc.links.filter(l => l.a === r.id || l.b === r.id).length : 0;
-  P.innerHTML = `<div class="panel gamecard"><div class="pb">
-      <div class="gh">
+  const persoBody = `<div class="gh">
         <button class="gicon" id="gi-icon" style="border-color:${nodeColor(r)};background:${r.iconBg || '#fff'}" title="${kind === 'image' ? 'Recadrer l\'image' : 'Choisir une image pour ton jeu'}">${rootIconHtml(r)}</button>
         <div class="ghx"><div class="btype">Ton jeu</div><input type="text" id="gi-name" class="bname" value="${esc(r.name)}" spellcheck="false" placeholder="Nom du jeu"></div>
       </div>
@@ -3270,20 +3327,21 @@ function renderGamePanel(P, isSel) {
         <input type="text" id="gi-txt" maxlength="4" placeholder="…ou tape un emoji ou 1 à 4 lettres" value="${kind === 'emoji' && !GAME_EMOJIS.includes(ic.v) ? esc(ic.v) : ''}"></div>` : ''}
       ${kind === 'image' ? `<button class="tile sm wide" id="gi-crop">${ico('crop', 18)}<span>Recadrer l'image (zoom)</span></button>` : ''}
       <div class="prow"><label>Contour</label>${swatches('gi-ring', [TYPES.root.color, ...PALETTE.filter(c => c !== '#ffffff')], nodeColor(r))}</div>
-      <div class="prow"><label>Fond</label>${swatches('gi-bg', BG_SW, r.iconBg || '#ffffff')}</div>
-    </div></div>
-    <div class="panel"><div class="ph">${ico('pitch', 14)} Résumé du jeu</div><div class="pb">
-      <textarea id="gs-pitch" rows="3" placeholder="L'accroche : en deux phrases, de quoi parle ton jeu et pourquoi on a envie d'y jouer ?">${esc(s.pitch || '')}</textarea>
+      <div class="prow"><label>Fond</label>${swatches('gi-bg', BG_SW, r.iconBg || '#ffffff')}</div>`;
+  const sumBody = `<textarea id="gs-pitch" rows="3" placeholder="L'accroche : en deux phrases, de quoi parle ton jeu et pourquoi on a envie d'y jouer ?">${esc(s.pitch || '')}</textarea>
       <div class="sumgrid">
         <label class="sumf" title="Nombre de joueurs">${ico('players', 16)}<input type="number" id="gs-pmin" min="1" max="99" value="${esc(s.pmin || '')}" placeholder="2"><b>à</b><input type="number" id="gs-pmax" min="1" max="99" value="${esc(s.pmax || '')}" placeholder="4"><i>joueurs</i></label>
         <label class="sumf" title="Durée d'une partie">${ico('clock', 16)}<input type="number" id="gs-dur" min="1" max="999" value="${esc(s.dur || '')}" placeholder="30"><i>minutes</i></label>
         <label class="sumf" title="Âge conseillé">${ico('age', 16)}<input type="number" id="gs-age" min="1" max="99" value="${esc(s.age || '')}" placeholder="10"><i>ans et +</i></label>
         <label class="sumf" title="Thème, genre, mécaniques">${ico('theme', 16)}<input type="text" id="gs-theme" value="${esc(s.theme || '')}" placeholder="Thème : fantasy, course, enquête…"></label>
-      </div>
-    </div></div>
-    <div class="panel"><div class="ph">${ico('plus', 14)} Ajouter une bulle${isSel ? ' liée au jeu' : ''}</div><div class="pb"><div class="tilegrid t5">${['rules', 'cards', 'tokens', 'boards', 'idea'].map(t => typeTile(t)).join('')}</div></div></div>
-    <div class="panel"><div class="ph">${ico('dots', 14)} Bulles du jeu (${others.length})${isSel ? ` · ${plural(nb, 'lien', 'liens')}` : ''}</div><div class="pb"><div class="plist">${others.map(n => nodeRow(n)).join('') || '<div class="note">Aucune bulle pour l\'instant : choisis un type juste au-dessus, ou double-clique dans le vide de la carte.</div>'}</div>
-      <button class="bigbtn" id="hp-print-all">${ico('print', 18)}Gestionnaire d'impression<kbd>Ctrl+P</kbd></button></div></div>`;
+      </div>`;
+  const eye = n => `<button class="x eyeb" data-eye="${n.id}" title="${isOff(n.id) ? 'Grisée par le filtre : clic pour la réafficher' : 'Griser cette bulle sur la carte (filtre)'}">${ico('eye', 14)}</button>`;
+  const listBody = `<div class="plist">${others.map(n => nodeRow(n, eye(n))).join('') || '<div class="note">Aucune bulle pour l\'instant : choisis un type dans la palette de gauche (section Créer), ou double-clique dans le vide de la carte.</div>'}</div>`;
+  P.innerHTML = `<div class="gamecard">${fold('perso', 1, 'Personnalisation', 'brush', persoBody)}</div>
+    ${fold('sum', 2, 'Résumé du jeu', 'pitch', sumBody)}
+    ${fold('bubs', 3, 'Bulles du jeu', 'dots', listBody, `<span class="fcnt">${others.length}${isSel ? ' · ' + plural(nb, 'lien', 'liens') : ''}</span>`)}
+    <div class="panel"><div class="pb" style="padding-top:12px"><button class="bigbtn" id="hp-print-all">${ico('print', 18)}Gestionnaire d'impression<kbd>Ctrl+P</kbd></button></div></div>`;
+  wireFolds(P);
   const setIcon = (icon) => { r.icon = icon; touch(); drawHub(); renderHubPanel(); };
   $('#gi-name').oninput = e => { r.name = doc.name = e.target.value || ' '; touch(true); drawHub(); updateTitle(); };
   $('#gi-name').onchange = () => touch();
@@ -3987,7 +4045,7 @@ const GUIDE = [
         tip: 'Tu peux aussi double-cliquer dans le vide de la carte : un menu te propose directement les cinq types de bulles.' },
       { t: 'Enregistrer', why: `${K('Ctrl')}+${K('S')} enregistre tout le jeu dans un seul fichier <b>.mmg</b> : carte mentale, règles, cartes, jetons, plateaux et réglages d'impression.`, tip: 'En plus, MomoTOP garde des copies automatiques dans le navigateur (voir le chapitre Fichiers).' }]],
     ['L\'écran', [
-      { t: 'La barre du haut', dots: [`${B('btn-undo')} ${B('btn-redo')} annuler et rétablir.`, `${B('btn-new')} un nouveau jeu, ${B('btn-hub')} retour à la carte mentale, ${B('btn-bubble')} créer une bulle.`, `À droite : ${B('btn-fullscreen')} plein écran, ${B('btn-file')} les fichiers, ${B('btn-print')} l'impression, ${B('btn-guide')} ce guide et ${B('btn-settings')} les paramètres.`] },
+      { t: 'La barre du haut', dots: [`${B('btn-undo')} ${B('btn-redo')} annuler et rétablir.`, `${B('btn-hub')} retour à la carte mentale (grisé quand tu y es déjà), ${B('btn-filter')} le filtre : décoche des bulles pour les griser sur la carte.`, `À droite : ${B('btn-fullscreen')} plein écran, ${B('btn-file')} les fichiers, ${B('btn-print')} l'impression, ${B('btn-guide')} ce guide et ${B('btn-settings')} les paramètres.`] },
       { t: 'La palette (à gauche)', why: 'Trois familles de boutons, trois par ligne : <b>Outils</b> pour manipuler la carte, <b>Créer</b> pour poser des bulles, <b>Vue</b> pour zoomer.', tip: 'Laisse le curseur une seconde sur un bouton : une bulle d\'aide rappelle son rôle et son raccourci.' },
       { t: 'Le volet de droite', why: 'Il montre ce qui est sélectionné : ton jeu quand rien n\'est choisi, la bulle cliquée sinon, avec de gros boutons pour les actions courantes.' },
       { t: 'MOMOrdor, en bas à gauche', why: 'Le petit viking est ton compagnon IA : clique-le pour lui poser une question sur ton jeu ou sur MomoTOP.' }]]] },
@@ -3995,7 +4053,7 @@ const GUIDE = [
     secs: [['Créer des bulles', [
       { t: 'Depuis la palette', why: 'Le moyen le plus direct, avec un raccourci clavier par type.', steps: [`Clique un type : ${B('btn-c-rules')} ${K('1')}, ${B('btn-c-cards')} ${K('2')}, ${B('btn-c-tokens')} ${K('3')}, ${B('btn-c-boards')} ${K('4')}, ${B('btn-c-idea')} ${K('5')}.`, 'Clique dans la carte pour poser la bulle.'], tip: `La nouvelle bulle est reliée à la bulle sélectionnée, ou au point de départ. ${K('Maj')} + clic pour en poser plusieurs d'affilée.` },
       { t: 'Le + vert', why: 'Quand une bulle est sélectionnée, un petit + vert apparaît sur son bord droit.', dots: ['Glisse-le vers une autre bulle : elles sont liées.', 'Glisse-le dans le vide : un menu crée une nouvelle bulle liée, là où tu as lâché.'] },
-      { t: 'Depuis le volet de droite', why: 'Les tuiles colorées <b>Ajouter une bulle</b> créent une bulle liée à celle qui est sélectionnée, sans viser dans la carte.' },
+      { t: 'Nouveau jeu', why: `Menu de la disquette ${B('btn-file')}, <b>Nouveau jeu</b>, ou ${K('Ctrl')}+${K('Alt')}+${K('N')}.` },
       { t: 'Dupliquer', why: `${B('btn-c-dup')} ou ${K('Ctrl')}+${K('D')} copie la bulle sélectionnée avec tout son contenu et ses liens.` }]],
     ['Lier et délier', [
       { t: `Outil Lier ${B('btn-t-link')}`, steps: ['Clique une bulle.', 'Clique la bulle à relier : c\'est fait.'], tip: `Recliquer deux bulles déjà liées supprime leur lien. Raccourci ${K('L')}.` },
@@ -4007,9 +4065,11 @@ const GUIDE = [
       { t: `Ranger ${B('btn-t-arrange')}`, why: 'Dispose automatiquement les bulles en étoile autour du point de départ, en suivant les liens. Ctrl+Z si le résultat ne te plaît pas.' }]],
     ['Ton jeu (le point de départ)', [
       { t: 'Nom et icône', why: 'Clique le point de départ (ou clique dans le vide) : le volet de droite montre ton jeu.', dots: [`${I('logo')} <b>Logo</b> : le logo MomoTOP.`, `${I('smile')} <b>Emoji</b> : 60 proposés, ou n'importe lequel tapé au clavier, ou 1 à 4 lettres.`, `${I('image')} <b>Image</b> : choisis une photo, puis recadre-la au zoom dans le rond. ${I('crop')} <b>Recadrer</b> la reprend à tout moment.`], tip: 'Tout se voit en direct sur la carte. Le contour et le fond du rond se choisissent juste en dessous.' },
+      { t: 'Le volet en 3 chapitres', why: 'Personnalisation, Résumé du jeu, Bulles du jeu : clique le titre d\'un chapitre pour le replier ou le déplier. MomoTOP s\'en souvient.' },
       { t: 'Le résumé du jeu', why: 'L\'accroche, le nombre de joueurs, la durée, l\'âge et le thème. Ces infos s\'affichent sous le nom du jeu sur la carte, et MOMOrdor s\'en sert pour te conseiller.' }]],
     ['Gérer les bulles', [
       { t: 'Le volet d\'une bulle', why: `Nom, couleur, chiffres clés, et les gros boutons : ${I('open')} Ouvrir, ${I('copy')} Dupliquer, ${I('link')} Lier à…, ${I('print')} Imprimer, ${I('trash')} Supprimer.` },
+      { t: `Le filtre ${B('btn-filter')}`, why: 'Coche ou décoche des types de bulles ou des bulles une par une : les bulles décochées restent à leur place mais sont grisées, pour y voir clair. L\'œil à droite de chaque bulle, dans le chapitre Bulles du jeu, fait pareil. Le bouton passe en jaune avec le nombre de bulles grisées.' },
       { t: 'Raccourcis', why: `${K('Entrée')} ouvrir · ${K('F2')} renommer · ${K('Ctrl')}+${K('D')} dupliquer · ${K('Suppr')} supprimer · clic droit : le menu de la bulle.` }]]] },
   { id: 'pieces', ic: 'cards', title: 'Cartes, jetons, plateaux', intro: 'Les trois bulles de pièces partagent le même atelier : on compose chaque pièce avec des modules, on les range en paquets, on règle le format une fois pour toutes.',
     secs: [['La vue d\'ensemble', [
