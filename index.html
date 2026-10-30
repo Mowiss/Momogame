@@ -969,6 +969,7 @@ a.dbtn:hover{color:#fff}
 .pp-fd{display:flex;flex-direction:column;align-items:center;gap:8px;max-width:100%;max-height:100%}
 .pp-fd img{max-width:100%;max-height:calc(100% - 4px);border-radius:4px;box-shadow:0 10px 30px #0009;background:#4f8a3c}
 .fd-seg{display:flex;border:1px solid var(--g600);border-radius:5px;overflow:hidden}.fd-seg button{flex:1;background:var(--g900);border:0;border-right:1px solid var(--g600);padding:5px 0;font-weight:700}.fd-seg button:last-child{border-right:0}.fd-seg button.on{background:var(--brand);color:#fff}
+#btn-t-del.on{background:#b91c1c!important;border-color:#f87171!important;color:#fff!important}
 
 </style>
 </head>
@@ -1074,7 +1075,7 @@ setTimeout(done,6200);
         <button class="tbtn" id="btn-t-link" data-tool="link" title="Lien unique : clic sur une bulle (ou un paquet) puis sur une autre (L)"><i data-ico="link" data-size="19"></i></button>
         <button class="tbtn" id="btn-t-patate" data-tool="patate" title="Lien paquet : entoure des bulles à main levée pour les regrouper dans un paquet, qui se lie ensuite comme un seul objet (P)"><i data-ico="patate" data-size="19"></i></button>
         <button class="tbtn" id="btn-t-cut" data-tool="cut" title="Délier : clic sur un lien pour le couper (U)"><i data-ico="unlink" data-size="19"></i></button>
-        <button class="tbtn" id="btn-t-del" data-cmd="delete" title="Supprimer la sélection (Suppr)"><i data-ico="trash" data-size="19"></i></button>
+        <button class="tbtn" id="btn-t-del" data-tool="erase" title="Gomme à bulles : activé, chaque clic efface la bulle, le lien ou le paquet cliqué (X) — recliquer pour désactiver. Suppr efface toujours la sélection."><i data-ico="trash" data-size="19"></i></button>
       </div></div></div>
       <div class="tsec"><div class="tsec-h">Créer</div><div class="tframe"><div class="tgrid">
         <button class="tbtn c-rules" id="btn-c-rules" data-place="rules" title="Bulle Règles : traitement de texte (1)"><i data-ico="rules" data-size="19"></i></button>
@@ -3668,10 +3669,11 @@ const drawHub = rafOnce(() => {
   doc.links.forEach(l => {
     const E = linkEnds(l); if (!E) return; const a = E[0], b = E[1];
     if (Math.max(a.x, b.x) < vx0 || Math.min(a.x, b.x) > vx1 || Math.max(a.y, b.y) < vy0 || Math.min(a.y, b.y) > vy1) return;
-    const k = linkCtrl(a, b), isSel = selLink === l.id, isHov = hoverLink === l.id && (hubTool === 'cut' || !hd);
+    const k = linkCtrl(a, b), isSel = selLink === l.id, isHov = hoverLink === l.id && (hubTool === 'cut' || hubTool === 'erase' || !hd);
     c.beginPath(); c.moveTo(a.x, a.y); c.bezierCurveTo(k[0], k[1], k[2], k[3], b.x, b.y);
-    c.setLineDash(isHov && hubTool === 'cut' ? [8, 6] : []);
-    c.strokeStyle = isSel ? '#fcd34d' : (isHov ? (hubTool === 'cut' ? '#f87171' : '#8193b0') : '#5b6b84');
+    const red = hubTool === 'cut' || hubTool === 'erase';
+    c.setLineDash(isHov && red ? [8, 6] : []);
+    c.strokeStyle = isSel ? '#fcd34d' : (isHov ? (red ? '#f87171' : '#8193b0') : '#5b6b84');
     c.lineWidth = Math.max(isSel ? 4 : 3, 1.6 / z); c.globalAlpha = (isOff(a.id) || isOff(b.id)) && !isSel ? 0.22 : 1; c.stroke(); c.globalAlpha = 1;
   });
   c.setLineDash([]);
@@ -3731,7 +3733,8 @@ function drawBubble(n) {
   if (off) { c.save(); c.globalAlpha = 0.28; c.filter = 'grayscale(1)'; }
   c.drawImage(bubbleSprite(n, g), x - 3, y - 3, g.w + 6, g.h + 6);
   if (off) c.restore();
-  if (isHov) { rr(c, x + 1, y + 1, g.w - 2, g.h - 2, g.h / 2); c.fillStyle = 'rgba(255,255,255,.06)'; c.fill(); }
+  if (isHov) { rr(c, x + 1, y + 1, g.w - 2, g.h - 2, g.h / 2); c.fillStyle = hubTool === 'erase' ? 'rgba(248,113,113,.18)' : 'rgba(255,255,255,.06)'; c.fill();
+    if (hubTool === 'erase') { rr(c, x - 5, y - 5, g.w + 10, g.h + 10, (g.h + 10) / 2); c.setLineDash([6, 5]); c.strokeStyle = '#f87171'; c.lineWidth = 3; c.stroke(); c.setLineDash([]); } }
   if (isSel && sel.size === 1 && !hd) drawPlus(c, x + g.w + 2, n.y);
 }
 function drawRoot(n) {
@@ -3858,11 +3861,11 @@ function nodeHasContent(n) {
   if (n.type === 'idea') return !!(n.data.text || '').trim();
   return false;
 }
-async function deleteNodes(ids) {
+async function deleteNodes(ids, quick) {
   ids = ids.filter(id => { const n = nodeById(id); return n && n.type !== 'root'; });
   if (!ids.length) { if ([...sel].includes('root')) toast('Le point de départ ne peut pas être supprimé.'); return; }
   const full = ids.map(nodeById).filter(nodeHasContent);
-  if (full.length && !await confirmDlg(ids.length > 1 ? `Supprimer ${ids.length} bulles (dont ${full.length} avec du contenu) ?` : `Supprimer la bulle « ${esc(full[0].name)} » et tout son contenu ?`, 'Supprimer')) return;
+  if (full.length && !quick && !await confirmDlg(ids.length > 1 ? `Supprimer ${ids.length} bulles (dont ${full.length} avec du contenu) ?` : `Supprimer la bulle « ${esc(full[0].name)} » et tout son contenu ?`, 'Supprimer')) return;
   doc.nodes = doc.nodes.filter(n => !ids.includes(n.id));
   doc.links = doc.links.filter(l => !ids.includes(l.a) && !ids.includes(l.b));
   cleanGroups(); ids.forEach(id => sel.delete(id)); touch(); renderHub();
@@ -4133,7 +4136,7 @@ function setHubTool(t) {
   hubTool = t; placing = null; linkFrom = null;
   $$('#hubView [data-tool]').forEach(b => b.classList.toggle('on', b.dataset.tool === t));
   $$('#hubView [data-place]').forEach(b => b.classList.remove('on'));
-  hint(t === 'link' ? 'Lien unique : clique une bulle ou un paquet, puis une autre (recliquer deux éléments liés les délie). Échap pour quitter.' : t === 'cut' ? 'Délier : clique sur un lien pour le couper. Échap pour quitter.' : t === 'patate' ? 'Lien paquet : entoure des bulles à main levée pour les regrouper. Échap pour quitter.' : '');
+  hint(t === 'link' ? 'Lien unique : clique une bulle ou un paquet, puis une autre (recliquer deux éléments liés les délie). Échap pour quitter.' : t === 'cut' ? 'Délier : clique sur un lien pour le couper. Échap pour quitter.' : t === 'patate' ? 'Lien paquet : entoure des bulles à main levée pour les regrouper. Échap pour quitter.' : t === 'erase' ? 'Gomme : clique une bulle, un lien ou un paquet pour l\'effacer (un paquet est défait, ses bulles restent). Ctrl+Z annule. Reclique la poubelle ou Échap pour arrêter.' : '');
   if (t === 'patate') { const ids = [...sel].filter(id => { const n = nodeById(id); return n && n.type !== 'root'; }); if (ids.length) { const g = makeGroup(ids); sel.clear(); selGroup = g.id; touch(); hubTool = 'select'; $$('#hubView [data-tool]').forEach(b => b.classList.toggle('on', b.dataset.tool === 'select')); hint(''); renderHub(); toast(`Paquet créé avec ${plural(ids.length, 'bulle', 'bulles')} sélectionnée${ids.length > 1 ? 's' : ''}`); } }
   updateCursor(); drawHub();
 }
@@ -4154,6 +4157,7 @@ function updateCursor() {
   else if (hubTool === 'patate') c = 'crosshair';
   else if (hubTool === 'link') c = hoverId || hoverGroup ? 'pointer' : 'crosshair';
   else if (hubTool === 'cut') c = hoverLink ? 'pointer' : 'crosshair';
+  else if (hubTool === 'erase') c = hoverId || hoverLink || hoverGroup ? 'pointer' : 'crosshair';
   else if (hoverId) c = hd && hd.mode === 'move' ? 'grabbing' : 'pointer';
   else if (hoverLink || hoverGroup) c = hd && hd.mode === 'move' ? 'grabbing' : 'pointer';
   if (hub.style.cursor !== c) hub.style.cursor = c;
@@ -4199,6 +4203,18 @@ function groupMenu(g, cx, cy) {
     { ic: 'print', text: 'Imprimer comme un paquet…', fn: () => openPrintManager([g.id]) },
     '-', { ic: 'unlink', text: 'Défaire (les bulles restent)', danger: true, fn: () => dissolveGroup(g) }]);
 }
+/* ---------- gomme : efface ce qu'on clique (bulle, lien, paquet) ---------- */
+function eraseAt(p) {
+  const h = hitNode(p);
+  if (h) {
+    if (h.n.type === 'root') { toast('Le point de départ ne peut pas être effacé.'); return; }
+    const name = h.n.name; deleteNodes([h.n.id], true); hoverId = null; toast(`Bulle « ${name} » effacée · Ctrl+Z pour annuler`); return;
+  }
+  const lk = hitLink(p);
+  if (lk) { removeLink(lk); hoverLink = null; touch(); renderHub(); toast('Lien effacé · Ctrl+Z pour annuler'); return; }
+  const g = hitGroup(p);
+  if (g) { dissolveGroup(g); hoverGroup = null; toast(`Paquet « ${g.name} » défait (ses bulles restent) · Ctrl+Z pour annuler`); }
+}
 /* ---------- interactions souris ---------- */
 let hd = null;   // geste en cours
 hub.addEventListener('pointerdown', e => {
@@ -4209,6 +4225,7 @@ hub.addEventListener('pointerdown', e => {
     e.preventDefault(); hd = { mode: 'pan', sx: e.clientX, sy: e.clientY, ox: hv.x, oy: hv.y }; hub.setPointerCapture(e.pointerId); updateCursor(); return;
   }
   if (hubTool === 'patate') { hd = { mode: 'lasso', pts: [p] }; hub.setPointerCapture(e.pointerId); return; }
+  if (hubTool === 'erase') { eraseAt(p); return; }
   const gp = hitGroupPlus(p);
   if (gp) { const s = groupGeo(gp); hd = { mode: 'connect', from: { id: gp.id, x: s.cx, y: s.cy, name: gp.name, grp: true }, to: p }; hub.setPointerCapture(e.pointerId); drawHub(); return; }
   const h = hitNode(p);
@@ -4322,7 +4339,7 @@ hub.addEventListener('wheel', e => {
 }, { passive: false });
 
 /* ---------- palette ---------- */
-$$('#hubView [data-tool]').forEach(b => b.onclick = () => setHubTool(b.dataset.tool));
+$$('#hubView [data-tool]').forEach(b => b.onclick = () => setHubTool(hubTool === b.dataset.tool && b.dataset.tool !== 'select' ? 'select' : b.dataset.tool));   // reclic : désactive l'outil
 $$('#hubView [data-place]').forEach(b => b.onclick = () => placing === b.dataset.place ? setHubTool('select') : startPlacing(b.dataset.place));
 $$('#hubView [data-cmd]').forEach(b => b.onclick = () => hubCmd(b.dataset.cmd));
 function hubCmd(c) {
@@ -4345,8 +4362,8 @@ function hubKey(e) {
   }
   if (k === 'Enter') { const n = selectedNodeForLink(); if (n) openNode(n.id); return true; }
   if (k === 'F2') { const g = selGroup && groupById(selGroup); if (g) { renameGroup(g); return true; } const n = selectedNodeForLink(); if (n) renameNode(n); return true; }
-  const map = { v: 'select', h: 'pan', l: 'link', u: 'cut', p: 'patate' };
-  if (map[k.toLowerCase()]) { setHubTool(map[k.toLowerCase()]); return true; }
+  const map = { v: 'select', h: 'pan', l: 'link', u: 'cut', p: 'patate', x: 'erase' };
+  if (map[k.toLowerCase()]) { const t = map[k.toLowerCase()]; setHubTool(hubTool === t && t !== 'select' ? 'select' : t); return true; }
   const pl = { '1': 'rules', '2': 'cards', '3': 'tokens', '4': 'boards', '5': 'idea', '6': 'map', '7': 'album', '8': 'formula' };
   if (pl[k]) { startPlacing(pl[k]); return true; }
   if (k.toLowerCase() === 'f') { hubFit(); return true; }
@@ -4463,8 +4480,8 @@ function drawGroups(c, vx0, vy0, vx1, vy1) {
     const J = jellyStep(g, s); if (!J.rest) moving = true; const poly = J.rest ? s.poly : jellyPoly(s, J);
     c.beginPath(); poly.forEach((p, i) => i ? c.lineTo(p[0], p[1]) : c.moveTo(p[0], p[1])); c.closePath();
     c.fillStyle = hexA(PAT_COL, isDrop ? .2 : isHov || isSel ? .13 : .08); c.fill();
-    c.lineWidth = Math.max(isSel || isDrop || isLeave ? 3.5 : 2.5, 1.4 / hv.z); c.strokeStyle = isLeave ? '#f87171' : isSel ? '#fcd34d' : hexA(PAT_COL, isDrop ? 1 : .75);
-    if (isDrop || isLeave) c.setLineDash([10, 7]); c.stroke(); c.setLineDash([]);
+    c.lineWidth = Math.max(isSel || isDrop || isLeave ? 3.5 : 2.5, 1.4 / hv.z); const isEr = isHov && hubTool === 'erase'; c.strokeStyle = isLeave || isEr ? '#f87171' : isSel ? '#fcd34d' : hexA(PAT_COL, isDrop ? 1 : .75);
+    if (isDrop || isLeave || isEr) c.setLineDash([10, 7]); c.stroke(); c.setLineDash([]);
     if (hv.z * 13 >= 5) {
       const L = patLabel(g, s); rr(c, L.x, L.y, L.w, L.h, L.h / 2); c.fillStyle = isSel ? '#3a3216' : '#123a37'; c.fill(); c.lineWidth = 1.5; c.strokeStyle = isSel ? '#fcd34d' : PAT_COL; c.stroke();
       c.font = F_PAT; c.fillStyle = '#ccfbf1'; c.textAlign = 'center'; c.textBaseline = 'middle'; c.fillText(L.t, s.cx, L.y + L.h / 2 + 1); c.textAlign = 'left';
@@ -6655,6 +6672,7 @@ const GUIDE = [
       { t: `Lien unique ${B('btn-t-link')}`, steps: ['Clique une bulle (ou un paquet).', 'Clique la bulle ou le paquet à relier : c\'est fait.'], tip: `Recliquer deux éléments déjà liés supprime leur lien. Raccourci ${K('L')}.` },
       { t: `Lien paquet ${B('btn-t-patate')}`, why: 'Un paquet est un rond patatoïde qui contient des bulles. Il se lie ensuite aux autres bulles (ou paquets) comme un seul objet, et s\'imprime comme un paquet.', steps: ['Choisis l\'outil (ou ' + K('P') + ').', 'Entoure des bulles à main levée : le paquet se forme autour d\'elles.'], dots: ['Si des bulles sont déjà sélectionnées, l\'outil les met tout de suite dans un paquet.', 'Glisse une bulle (ou un paquet) dedans pour l\'ajouter, dehors pour l\'en sortir.', '<b>Paquets de paquets</b> : entoure des paquets entiers (et des bulles) au lasso, ou glisse un paquet dans un autre. Défaire un paquet fait remonter son contenu d\'un niveau.', 'Glisse le paquet (dans son vide ou par son étiquette) pour le déplacer avec tout son contenu.', 'Double-clic sur le paquet : le renommer. Le + vert de son bord le lie comme celui d\'une bulle.', `${K('Suppr')} sur un paquet sélectionné le défait : les bulles restent.`] },
       { t: `Outil Délier ${B('btn-t-cut')}`, why: `Clique sur un lien (il passe en rouge pointillé au survol) pour le couper. Raccourci ${K('U')}.` },
+      { t: `Gomme ${B('btn-t-del')}`, why: `La poubelle s'active et se désactive d'un clic (ou ${K('X')}). Activée, chaque clic efface ce qu'il touche : une bulle, un lien, ou un paquet (défait, ses bulles restent). Ce qui va être effacé passe en rouge au survol. ${K('Ctrl')}+${K('Z')} annule, ${K('Échap')} ou un reclic sur la poubelle l'arrête.` },
       { t: 'Avec la sélection', why: `Un clic sur un lien le sélectionne (il devient jaune) : ${K('Suppr')} le coupe. Le volet d'une bulle liste aussi ses liens, avec un bouton ${I('unlink')} pour chacun.` }]],
     ['Se déplacer', [
       { t: `Sélection ${B('btn-t-select')}`, dots: ['Clic : choisir une bulle. Glisser : la déplacer.', 'Glisser dans le vide : un cadre sélectionne plusieurs bulles.', `${K('Maj')} ou ${K('Ctrl')} + clic : ajouter ou retirer une bulle de la sélection. ${K('Ctrl')}+${K('A')} : tout.`] },
@@ -6738,7 +6756,7 @@ const GUIDE = [
   { id: 'keys', ic: 'keyboard', title: 'Raccourcis', intro: 'Tous les raccourcis au même endroit.',
     secs: [[null, [
       { t: 'Partout', why: `${K('Ctrl')}+${K('S')} enregistrer · ${K('Ctrl')}+${K('Maj')}+${K('S')} enregistrer sous · ${K('Ctrl')}+${K('O')} ouvrir · ${K('Ctrl')}+${K('Z')} / ${K('Ctrl')}+${K('Y')} annuler / rétablir · ${K('Ctrl')}+${K('P')} impression · ${K('F1')} guide · ${K('F11')} plein écran · ${K('Échap')} retour à la carte mentale.` },
-      { t: 'Carte mentale', why: `${K('V')} sélection · ${K('H')} main · ${K('L')} lier · ${K('U')} délier · ${K('1')} à ${K('5')} poser une bulle · ${K('F')} tout voir · ${K('+')} / ${K('−')} zoom · ${K('Entrée')} ouvrir · ${K('F2')} renommer · ${K('Ctrl')}+${K('D')} dupliquer · ${K('Suppr')} supprimer · ${K('Espace')} maintenu : déplacer la vue.` },
+      { t: 'Carte mentale', why: `${K('V')} sélection · ${K('H')} main · ${K('L')} lier · ${K('U')} délier · ${K('X')} gomme · ${K('1')} à ${K('8')} poser une bulle · ${K('F')} tout voir · ${K('+')} / ${K('−')} zoom · ${K('Entrée')} ouvrir · ${K('F2')} renommer · ${K('Ctrl')}+${K('D')} dupliquer · ${K('Suppr')} supprimer · ${K('Espace')} maintenu : déplacer la vue.` },
       { t: 'Éditeur de pièces', why: `${K('Suppr')} · flèches · ${K('Ctrl')}+${K('D')} · ${K('Pg↑')} ${K('Pg↓')} · ${K('Ctrl')} + molette : zoom.` },
       { t: 'Règles', why: `${K('Ctrl')}+${K('B')} / ${K('I')} / ${K('U')} · ${K('Ctrl')}+${K('K')} lien · ${K('Ctrl')}+${K('Alt')}+${K('0')} à ${K('3')} styles · ${K('Ctrl')}+${K('Entrée')} saut de page · ${K('Tab')} dans un tableau.` }]]] }
 ];
